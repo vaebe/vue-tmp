@@ -8,7 +8,7 @@ module.exports = {
     defineProps: 'readonly'
   },
   extends: [
-    'plugin:vue/essential',
+    'plugin:vue/vue3-essential',
     'standard',
     'prettier',
     'plugin:prettier/recommended'

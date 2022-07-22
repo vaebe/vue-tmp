@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "lint:script": "eslint --ext .js,.jsx,.ts,.tsx --fix --quiet ./"
+    "lint:script": "eslint --ext .js,.jsx,.ts,.tsx,.vue --fix --quiet ./"
   },
   "dependencies": {
     "vue": "^3.2.37"
@@ -26,6 +26,7 @@
     "prettier": "^2.7.1",
     "typescript": "^4.6.4",
     "vite": "^3.0.0",
+    "vite-plugin-eslint": "^1.7.0",
     "vue-tsc": "^0.38.4"
   }
 }
