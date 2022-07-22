@@ -1,8 +1,18 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import viteEslint from 'vite-plugin-eslint';
 
-// https://vitejs.dev/config/
+// eslint插件
+import viteEslint from 'vite-plugin-eslint';
+// stylelint插件
+import viteStylelint from '@amatlash/vite-plugin-stylelint';
+
 export default defineConfig({
-  plugins: [vue(), viteEslint()]
+  plugins: [
+    vue(),
+    viteEslint(),
+    viteStylelint({
+      // 对某些文件排除检查
+      exclude: /windicss|node_modules/
+    })
+  ]
 });

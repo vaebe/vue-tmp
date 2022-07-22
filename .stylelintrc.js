@@ -12,8 +12,12 @@ module.exports = {
     'stylelint-config-recess-order',
     // 接入 Prettier 规则
     'stylelint-config-prettier',
-    'stylelint-prettier/recommended'
+    'stylelint-prettier/recommended',
+
+    'stylelint-config-recommended-vue',
+    'stylelint-config-recommended-vue/scss',
   ],
+  customSyntax: 'postcss-html',
   ignoreFiles: [], // 忽略某些不想被检查的文件
   // 配置 rules
   rules: {
