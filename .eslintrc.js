@@ -3,19 +3,23 @@ module.exports = {
     browser: true,
     es2021: true
   },
+  globals: {
+    defineEmits: 'readonly',
+    defineProps: 'readonly'
+  },
   extends: [
-    'plugin:vue/vue3-essential',
-    'standard'
+    'plugin:vue/essential',
+    'standard',
+    'prettier',
+    'plugin:prettier/recommended'
   ],
   parserOptions: {
     ecmaVersion: 'latest',
     parser: '@typescript-eslint/parser',
     sourceType: 'module'
   },
-  plugins: [
-    'vue',
-    '@typescript-eslint'
-  ],
+  plugins: ['vue', '@typescript-eslint', 'prettier'],
   rules: {
+    'prettier/prettier': 'error'
   }
-}
+};
