@@ -28,6 +28,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-vue": "^9.2.0",
     "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
     "postcss-html": "^1.5.0",
     "prettier": "^2.7.1",
     "stylelint": "^14.9.1",
@@ -41,5 +42,15 @@
     "vite": "^3.0.0",
     "vite-plugin-eslint": "^1.7.0",
     "vue-tsc": "^0.38.4"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,tsx,ts,vue}": [
+      "npm run lint:script",
+      "git add ."
+    ],
+    "**/*.{scss, css}": [
+      "npm run lint:style",
+      "git add ."
+    ]
   }
 }
