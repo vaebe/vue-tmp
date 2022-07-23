@@ -1,6 +1,6 @@
 
 # 起步
-> vite3 + vue3 作为示例项目 [掘金个人主义](https://juejin.cn/user/712139266339694/posts)。
+> vite3 + vue3 作为示例项目 [掘金个人主页](https://juejin.cn/user/712139266339694/posts)。 
 + 本文将从零到一介绍 `Eslint、Prettier、Stylelint、Commitlint、ls-lint` 的安装配置以及结合 `Husky`+`lint-staged` 做 `git commit` 时对代码进行一系列自动化的检查。
 
 ## 建个空仓库
