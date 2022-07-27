@@ -1,9 +1,5 @@
 <template>测试</template>
 
-<script>
-export default {
-  name: 'testADFr'
-};
-</script>
+<script setup lang="ts"></script>
 
 <style scoped></style>

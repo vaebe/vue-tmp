@@ -1,3 +1,4 @@
+import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 
@@ -14,5 +15,10 @@ export default defineConfig({
       // 对某些文件排除检查
       exclude: /windicss|node_modules/
     })
-  ]
+  ],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src')
+    }
+  }
 });
