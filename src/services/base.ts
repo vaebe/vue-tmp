@@ -49,13 +49,16 @@ function isLoadingWhite(url: string) {
 const { VITE_APP_TIMEOUT, VITE_APP_BASE_URL } = import.meta.env;
 
 // 创建axios实例
+// @ts-ignore
 const service = axios.create({
   baseURL: VITE_APP_BASE_URL,
-  paramsSerializer: function (params) {
-    // get 请求添加时间戳  防止缓存
-    params.client = 'web';
-    params.timestamp = new Date().getTime();
-    return qs.stringify(params, { arrayFormat: 'brackets' });
+  paramsSerializer: {
+    encode: (params) => {
+      // get 请求添加时间戳  防止缓存
+      params.client = 'web';
+      params.timestamp = new Date().getTime();
+      return qs.stringify(params, { arrayFormat: 'brackets' });
+    }
   },
   timeout: VITE_APP_TIMEOUT
 });

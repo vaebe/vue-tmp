@@ -21,8 +21,10 @@
           </el-col>
           <el-col :span="12">
             <el-row type="flex" justify="end">
-              <el-button type="primary" @click="search">查询</el-button>
-              <el-button @click="getList">重置</el-button>
+              <el-button type="primary" @click="handleCurrentChange(1)">
+                查询
+              </el-button>
+              <el-button @click="reset">重置</el-button>
             </el-row>
           </el-col>
         </el-row>
@@ -70,70 +72,25 @@
   </div>
 </template>
 
-<script>
-import { reactive, toRefs, onMounted } from 'vue';
+<script setup>
+import { reactive } from 'vue';
 import demo from '@/services/list';
 import { ElMessage } from 'element-plus';
+import { usePage } from '@/composables/use-page';
 
-export default {
-  name: 'list',
-  setup() {
-    const state = reactive({
-      warehouseType: {},
-      hiddenDangerDisposalStatus: {},
-      searchForm: {
-        name: '',
-        type: ''
-      },
-      tableData: [],
-      page: {
-        pageSize: 10,
-        pageNum: 1,
-        total: 0
-      }
-    });
-    const handleSizeChange = (size) => {
-      state.page.pageSize = size;
-    };
-    const handleCurrentChange = (cur) => {
-      state.page.pageNum = cur;
-    };
+const searchForm = reactive({
+  name: '',
+  type: ''
+});
+const { tableData, page, handleCurrentChange, handleSizeChange, reset } =
+  usePage({
+    searchForm,
+    getListApi: demo.queryList
+  });
+reset();
 
-    const getList = () => {
-      demo.queryList().then((res) => {
-        if (res.code === 0) {
-          state.tableData = res.data.list;
-          state.page.total = res.data.total;
-        }
-      });
-    };
-    onMounted(() => {
-      getList();
-    });
-
-    const view = (row) => {
-      ElMessage.success(JSON.stringify(row));
-    };
-
-    const search = () => {
-      if (state.searchForm.name) {
-        state.tableData = state.tableData.filter(
-          (item) => item.name === state.searchForm.name
-        );
-      } else {
-        getList();
-      }
-    };
-
-    return {
-      ...toRefs(state),
-      handleSizeChange,
-      handleCurrentChange,
-      view,
-      getList,
-      search
-    };
-  }
+const view = (row) => {
+  ElMessage.success(JSON.stringify(row));
 };
 </script>
 <style scoped>
