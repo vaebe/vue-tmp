@@ -14,7 +14,8 @@
     "types": [
       "node",
       "vite/client",
-      "types/qs"
+      "types/qs",
+      "pinia-plugin-persist"
     ],
     "lib": [
       "ESNext",

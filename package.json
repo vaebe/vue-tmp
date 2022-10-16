@@ -18,7 +18,6 @@
     "element-plus": "^2.2.18",
     "pinia": "^2.0.23",
     "qs": "^6.11.0",
-    "sass": "^1.55.0",
     "vue": "^3.2.40",
     "vue-router": "^4.0.3"
   },
@@ -56,7 +55,8 @@
     "typescript": "^4.6.4",
     "vite": "^3.1.8",
     "vite-plugin-eslint": "^1.7.0",
-    "vue-tsc": "^0.38.4"
+    "vue-tsc": "^0.38.4",
+    "sass": "^1.55.0"
   },
   "lint-staged": {
     "**/*.{js,jsx,tsx,ts,vue}": [
