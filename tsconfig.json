@@ -11,6 +11,11 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
+    "types": [
+      "node",
+      "vite/client",
+      "types/qs"
+    ],
     "lib": [
       "ESNext",
       "DOM"

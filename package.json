@@ -12,6 +12,12 @@
     "postinstall": "husky install"
   },
   "dependencies": {
+    "axios": "^1.1.2",
+    "element-plus": "^2.2.18",
+    "pinia": "^2.0.23",
+    "pinia-plugin-persist": "^1.0.0",
+    "qs": "^6.11.0",
+    "sass": "^1.55.0",
     "vue": "^3.2.40"
   },
   "devDependencies": {
@@ -19,6 +25,8 @@
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
     "@ls-lint/ls-lint": "^1.11.2",
+    "@types/node": "^18.8.5",
+    "@types/qs": "^6.9.7",
     "@typescript-eslint/eslint-plugin": "^5.30.7",
     "@typescript-eslint/parser": "^5.30.7",
     "@vitejs/plugin-vue": "^3.0.0",
