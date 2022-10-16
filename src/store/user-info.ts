@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { reactive } from 'vue';
+import { resetObjToPrimitiveType } from '@/utils/tool';
 
 export interface UserInfoType {
   token: '';
@@ -16,8 +17,13 @@ export const useUserInfo = defineStore('user-info', () => {
     Object.assign(userInfo, data);
   };
 
+  const clearUserInfo = () => {
+    Object.assign(userInfo, resetObjToPrimitiveType(userInfo));
+  };
+
   return {
     userInfo,
-    setUserInfo
+    setUserInfo,
+    clearUserInfo
   };
 });
