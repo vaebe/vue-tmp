@@ -1,26 +1,32 @@
 import axios from 'axios';
+import type { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
 import qs from 'qs';
 import loading from '@/utils/loading';
 import { ElMessage } from 'element-plus';
 import { useUserInfo } from '@/store/user-info';
 
-const ERROR_TYPE_OBJ = {
-  400: '400请求错误',
-  401: '用户登录失效，请重新登录...',
-  403: '403拒绝访问',
-  404: '404请求路径错误',
-  405: '405请求类型错误',
-  408: '请求超时',
-  500: '服务器错误',
-  501: '服务未实现',
-  502: '网络错误',
-  503: '服务不可用',
-  504: '网络超时',
-  505: 'HTTP版本不受支持'
+export interface ERROR_TYPE_OBJ_TYPE {
+  [propName: string]: string;
+}
+
+const ERROR_TYPE_OBJ: ERROR_TYPE_OBJ_TYPE = {
+  '400': '400请求错误',
+  '401': '用户登录失效，请重新登录...',
+  '403': '403拒绝访问',
+  '404': '404请求路径错误',
+  '405': '405请求类型错误',
+  '408': '请求超时',
+  '500': '服务器错误',
+  '501': '服务未实现',
+  '502': '网络错误',
+  '503': '服务不可用',
+  '504': '网络超时',
+  '505': 'HTTP版本不受支持'
 };
 
 // 尝试将响应数据格式化成jason 失败返回原数据
-const formatTheResponseDataToJson = (data) => {
+const formatTheResponseDataToJson = (response: AxiosResponse) => {
+  const data = response.data;
   const enc = new TextDecoder('utf-8');
   const uint8Msg = new Uint8Array(data);
   try {
@@ -56,26 +62,27 @@ const service = axios.create({
 
 // 请求拦截器
 service.interceptors.request.use(
-  (config) => {
-    if (config.headers) {
-      const { userInfo } = useUserInfo();
-      config.headers.token = userInfo.token || '';
+  (config: AxiosRequestConfig) => {
+    const { userInfo } = useUserInfo();
+    const token = userInfo.token || '';
 
-      // 验证认证信息是否存在
-      const notTokenInfo = !config.headers.token;
-      const notLoginPage = !['#/login', '#/externalLogin'].some((item) =>
-        window.location.hash.includes(item)
-      );
-      if (notTokenInfo && notLoginPage) {
-        ElMessage.error('用户信息不存在，请重新登录！');
-        window.location.replace('#/login');
-      }
+    // 验证认证信息是否存在
+    const notLoginPage = !['#/login', '#/externalLogin'].some((item) =>
+      window.location.hash.includes(item)
+    );
 
-      // 判断加载 全局loading
-      if (!isLoadingWhite(config.url!)) {
-        loading.startLoading();
-      }
+    if (!token && notLoginPage) {
+      ElMessage.error('用户信息不存在，请重新登录！');
+      window.location.replace('#/login');
     }
+
+    // 判断加载 全局loading
+    if (!isLoadingWhite(config.url!)) {
+      loading.startLoading();
+    }
+
+    // headers 添加 token
+    config.headers!.token = token;
 
     return config;
   },
@@ -90,7 +97,7 @@ service.interceptors.response.use(
   (response) => {
     loading.endLoading();
 
-    const formatTheResponseData = formatTheResponseDataToJson(response.data);
+    const formatTheResponseData = formatTheResponseDataToJson(response);
     if (formatTheResponseData.code && formatTheResponseData.code !== 0) {
       return Promise.reject(handleError(formatTheResponseData));
     }
@@ -104,32 +111,26 @@ service.interceptors.response.use(
 );
 
 // 错误处理
-function handleError(error) {
+function handleError(error: AxiosError) {
   if (error.message === 'Network Error') {
-    error.msg = '请检查网络是否畅通...';
+    error.message = '请检查网络是否畅通...';
   }
 
   const { response } = error;
   if (response) {
-    error.msg = ERROR_TYPE_OBJ[response.status];
+    error.message = ERROR_TYPE_OBJ[response.status];
   }
 
-  const status401 = error.code === 401 || (response && response.status === 401);
+  const status401 =
+    error.code + '' === '401' || (response && response.status === 401);
   if (status401 && window.location.hash !== '#/login') {
-    error.msg = '用户登录失效，请重新登录...';
+    error.message = '用户登录失效，请重新登录...';
     window.location.replace('#/login');
   }
 
-  console.warn(
-    '请求错误:',
-    error.msg || error.message,
-    '\r\n',
-    response,
-    '\r\n',
-    error
-  );
+  console.warn('请求错误:', error.message, '\r\n', response, '\r\n', error);
   ElMessage.closeAll();
-  ElMessage.error(`错误：${error.msg || error.message || '请求错误！'}`);
+  ElMessage.error(`错误：${error.message || '请求错误！'}`);
   return error;
 }
 
