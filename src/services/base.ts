@@ -74,6 +74,8 @@ service.interceptors.request.use(
       window.location.hash.includes(item)
     );
 
+    console.log(token, '[[[[[');
+
     if (!token && notLoginPage) {
       ElMessage.error('用户信息不存在，请重新登录！');
       window.location.replace('#/login');

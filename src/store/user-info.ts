@@ -13,7 +13,7 @@ export const useUserInfo = defineStore('user-info', () => {
   });
 
   const setUserInfo = (data: UserInfoType) => {
-    userInfo.value = data;
+    Object.assign(userInfo, data);
   };
 
   return {
