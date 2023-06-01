@@ -15,8 +15,8 @@
 </template>
 
 <script setup>
-import Header from '@/views/layout/components/Header.vue';
-import Menu from '@/views/layout/components/Menu.vue';
+import Header from '@/views/layout/components/BaseHeader.vue';
+import Menu from '@/views/layout/components/BaseMenu.vue';
 </script>
 
 <style lang="scss" scoped>

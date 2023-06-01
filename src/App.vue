@@ -4,6 +4,4 @@
   <router-view></router-view>
 </template>
 
-<style scoped>
-/* Only comments */
-</style>
+<style scoped></style>

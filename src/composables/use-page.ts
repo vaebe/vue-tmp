@@ -9,13 +9,13 @@ export interface ResType {
 }
 
 export interface UsePageOptsType {
-  searchForm: {};
+  searchForm: any;
   getListApi: (opts: any) => Promise<ResType>;
   customQueryParameters?: () => ResType;
-  getListFunc?: (opts: any) => {};
-  resetFunc?: () => {};
-  sizeChangeFunc?: () => {};
-  currentChangeFunc?: () => {};
+  getListFunc?: (opts: any) => void;
+  resetFunc?: () => void;
+  sizeChangeFunc?: () => void;
+  currentChangeFunc?: () => void;
 }
 
 /**
@@ -36,7 +36,7 @@ export const usePage = (opts: UsePageOptsType) => {
     customQueryParameters = () => {
       return {};
     },
-    getListFunc = (opts) => {},
+    getListFunc = () => {},
     resetFunc = () => {},
     sizeChangeFunc = () => {},
     currentChangeFunc = () => {}

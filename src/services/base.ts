@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
+import type { AxiosResponse, AxiosError, InternalAxiosRequestConfig } from 'axios';
 import qs from 'qs';
 import loading from '@/utils/loading';
 import { ElMessage } from 'element-plus';
@@ -49,7 +49,6 @@ function isLoadingWhite(url: string) {
 const { VITE_APP_TIMEOUT, VITE_APP_BASE_URL } = import.meta.env;
 
 // 创建axios实例
-// @ts-ignore
 const service = axios.create({
   baseURL: VITE_APP_BASE_URL,
   paramsSerializer: {
@@ -65,7 +64,7 @@ const service = axios.create({
 
 // 请求拦截器
 service.interceptors.request.use(
-  (config: AxiosRequestConfig) => {
+  (config: InternalAxiosRequestConfig) => {
     const { userInfo } = useUserInfo();
     const token = userInfo.token || '';
 
@@ -74,20 +73,18 @@ service.interceptors.request.use(
       window.location.hash.includes(item)
     );
 
-    console.log(token, '[[[[[');
-
     if (!token && notLoginPage) {
       ElMessage.error('用户信息不存在，请重新登录！');
       window.location.replace('#/login');
     }
 
     // 判断加载 全局loading
-    if (!isLoadingWhite(config.url!)) {
+    if (!isLoadingWhite(config.url as string)) {
       loading.startLoading();
     }
 
     // headers 添加 token
-    config.headers!.token = token;
+    config.headers.token = token;
 
     return config;
   },
@@ -126,8 +123,7 @@ function handleError(error: AxiosError) {
     error.message = ERROR_TYPE_OBJ[response.status];
   }
 
-  const status401 =
-    error.code + '' === '401' || (response && response.status === 401);
+  const status401 = error.code + '' === '401' || (response && response.status === 401);
   if (status401 && window.location.hash !== '#/login') {
     error.message = '用户登录失效，请重新登录...';
     window.location.replace('#/login');

@@ -2,17 +2,12 @@
   <div class="box">
     <div class="login-title">{{ VITE_APP_TITLE }}</div>
     <div class="user-form-box">
-      <el-form
-        class="user-form"
-        ref="formRef"
-        :model="formDataObj"
-        :rules="loginRules"
-      >
+      <el-form ref="formRef" class="user-form" :model="formDataObj" :rules="loginRules">
         <el-form-item label="" prop="username">
           <el-input
             v-model="formDataObj.username"
             :prefix-icon="User"
-            maxLength="20"
+            max-length="20"
             :autofocus="true"
             autocomplete="off"
             clearable
@@ -22,9 +17,9 @@
 
         <el-form-item label="" prop="password">
           <el-input
-            show-password
             v-model="formDataObj.password"
-            maxLength="20"
+            show-password
+            max-length="20"
             clearable
             autocomplete="new-password"
             :prefix-icon="Unlock"
@@ -35,8 +30,8 @@
         <el-button
           type="primary"
           class="login-but-style but"
-          @click="clickLogin"
           :loading="loading"
+          @click="clickLogin"
         >
           点击登录
         </el-button>
@@ -47,8 +42,8 @@
   </div>
 </template>
 
-<script setup>
-import loginApi from '@/services/login';
+<script lang="ts" setup>
+import loginApi from '@/services/login.ts';
 import { reactive, ref } from 'vue';
 import { ElMessage } from 'element-plus';
 import { User, Unlock } from '@element-plus/icons-vue';
@@ -117,7 +112,7 @@ const clickLogin = () => {
   font-size: 18px;
   font-weight: bold;
   color: #fff;
-  background-image: url('../../assets/img/loginBg.jpg');
+  background-image: url('../assets/img/loginBg.jpg');
   background-size: 100% 100%;
 
   .login-title {

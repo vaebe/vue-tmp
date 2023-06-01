@@ -10,12 +10,7 @@
       </el-button>
 
       <div class="login-out">
-        <el-icon
-          color="red"
-          :size="28"
-          style="margin-right: 10px"
-          @click="loginOut"
-        >
+        <el-icon color="red" :size="28" style="margin-right: 10px" @click="loginOut">
           <circle-close />
         </el-icon>
       </div>

@@ -17,7 +17,7 @@ export default {
       meta: {
         name: '台账管理列表'
       },
-      component: () => import('@/views/demo/list.vue')
+      component: () => import('@/views/demo/demo-list.vue')
     }
   ]
 };

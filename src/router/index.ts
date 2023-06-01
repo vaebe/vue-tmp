@@ -1,8 +1,4 @@
-import {
-  createRouter,
-  createWebHashHistory,
-  RouteLocationNormalized
-} from 'vue-router';
+import { createRouter, createWebHashHistory, RouteLocationNormalized } from 'vue-router';
 import demoRouter from './demo';
 
 const routes = [
@@ -12,13 +8,13 @@ const routes = [
     redirect: (to: RouteLocationNormalized) => {
       return `${to.path}login`;
     },
-    component: () => import('@/views/layout/index.vue'),
+    component: () => import('@/views/layout/base-layout.vue'),
     children: [demoRouter]
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import('@/views/login/login.vue')
+    component: () => import('@/views/login.vue')
   },
   {
     path: '/refreshThePage',
@@ -28,12 +24,12 @@ const routes = [
   {
     path: '/404',
     name: '404',
-    component: () => import('@/views/error-page/error404.vue')
+    component: () => import('@/views/error-page/error-404.vue')
   },
   {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
-    component: () => import('@/views/error-page/error404.vue')
+    component: () => import('@/views/error-page/error-404.vue')
   }
 ];
 

@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'refreshThePage',
+  name: 'RefreshThePage',
   beforeRouteEnter(to, from, next) {
     const queryLen = Object.keys(to.query).length;
 

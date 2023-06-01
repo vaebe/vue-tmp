@@ -1,27 +1,35 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "target": "ESNext",
+    "target": "ES2020",
     "useDefineForClassFields": true,
     "module": "ESNext",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+
+    /* Bundler mode */
     "moduleResolution": "Node",
-    "strict": true,
-    "jsx": "preserve",
-    "sourceMap": true,
+    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    "baseUrl": ".",
+    "sourceMap": true,
     "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "types": [
       "node",
       "vite/client",
-      "types/qs",
-      "pinia-plugin-persist"
+      "pinia-plugin-persist",
+      "element-plus/global"
     ],
-    "lib": [
-      "ESNext",
-      "DOM"
-    ],
-    "skipLibCheck": true,
     "paths": {
       "@/*": [
         "src/*"
@@ -33,6 +41,11 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.js"
   ],
   "references": [
     {
