@@ -1,3 +1,10 @@
-# 基础示例 请查看 [example 分支](https://github.com/vaebe/viteAndVueTmp/tree/example)
-# todo
-+ vue文件内不识别路径别名 @ 待排查
+# 项目模版
+
+## 启动
+执行 `pnpm i` 安装依赖
+
+执行 `pnpm run dev` 启动项目
+
+执行 `pnpm run commit` 提交符合格式的代码
+
+执行 `pnpm run build` 打包部署
