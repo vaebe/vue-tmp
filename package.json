@@ -1,7 +1,7 @@
 {
-  "name": "simple-mall",
+  "name": "vue-tmp",
   "private": true,
-  "version": "0.0.0",
+  "version": "3.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -17,8 +17,8 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
     "@vueuse/core": "^10.1.2",
-    "axios": "^1.4.0",
-    "crypto-js": "^4.1.1",
+    "axios": "^1.6.3",
+    "crypto-js": "^4.2.0",
     "dayjs": "^1.11.8",
     "echarts": "^5.4.3",
     "element-plus": "^2.3.6",
@@ -54,7 +54,7 @@
     "husky": "^8.0.3",
     "inquirer": "8",
     "lint-staged": "^13.2.2",
-    "postcss": "^8.4.24",
+    "postcss": "^8.4.32",
     "postcss-html": "^1.5.0",
     "prettier": "^2.8.8",
     "sass": "^1.62.1",
