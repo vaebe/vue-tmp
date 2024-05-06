@@ -1,4 +1,4 @@
-import { useUploadOpts } from './useFile.ts';
-import { usePageList, usePageListDialog } from './usePageList.ts';
+import { useUploadOpts } from './useFile.ts'
+import { usePageList, usePageListDialog } from './usePageList.ts'
 
-export { useUploadOpts, usePageList, usePageListDialog };
+export { useUploadOpts, usePageList, usePageListDialog }
