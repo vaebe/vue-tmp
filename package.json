@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "postinstall": "husky install",
+    "prepare": "husky",
     "lint": "eslint \"src/**/*.{tsx,js,ts,vue}\" --fix",
     "commit": "git-cz"
   },
@@ -58,7 +58,7 @@
   },
   "lint-staged": {
     "src/**/*.{tsx,ts,vue}": [
-      "npm run lint"
+      "eslint --fix"
     ]
   },
   "config": {
