@@ -1,11 +1,14 @@
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from 'element-plus'
-import { computed, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
 import { cloneDeep } from 'lodash-es'
-import { useRoute, useRouter } from 'vue-router'
 import { getVerificationCode, userLogin, userRegister } from '@/api/login'
-import { useUserStore } from '@/stores'
 import { Encrypt } from '@/utils/password'
+
+// 浅色主题
+const mode = useColorMode({
+  attribute: 'class',
+})
+mode.value = 'light'
 
 const { VITE_APP_TITLE } = import.meta.env
 
@@ -172,64 +175,61 @@ function loginOrRegister() {
 </script>
 
 <template>
-  <div class="login-box flex items-center">
-    <div class="w-4/12 h-full bg-blue-50" />
-    <div class="w-8/12 flex justify-center">
-      <div class="w-5/12 flex flex-col items-center">
-        <h1 class="text-4xl tracking-widest">
-          {{ VITE_APP_TITLE }}
-        </h1>
-        <h2 class="mt-6 mb-10 text-sm tracking-widest text-gray-400">
-          有些事情总要试一试！
-        </h2>
-        <el-form
-          ref="loginFormRef"
-          class="w-full pt-4 px-2 mb-2 rounded bg-gray-50 dark:bg-stone-700"
-          :model="loginForm"
-          :rules="loginFormRules"
-          :label-width="isLogin ? '52px' : '70px'"
-        >
-          <el-form-item prop="userAccount" label="账号">
-            <el-input v-model="loginForm.userAccount" />
-          </el-form-item>
+  <div class="login-box flex items-center justify-center">
+    <div class="w-[360px] flex flex-col items-center">
+      <h1 class="text-4xl tracking-widest text-white">
+        {{ VITE_APP_TITLE }}
+      </h1>
+      <h2 class="mt-4 mb-6 text-sm tracking-widest text-gray-400">
+        有些事情总要试一试！
+      </h2>
+      <el-form
+        ref="loginFormRef"
+        class="w-full py-4 px-2 mb-2 rounded-sm bg-gray-50"
+        :model="loginForm"
+        :rules="loginFormRules"
+        :label-width="isLogin ? '52px' : '70px'"
+      >
+        <el-form-item prop="userAccount" label="账号">
+          <el-input v-model="loginForm.userAccount" />
+        </el-form-item>
 
-          <el-form-item v-if="!isLogin" prop="code" label="验证码:">
-            <el-input v-model="loginForm.code" placeholder="请输入验证码">
-              <template #append>
-                <span v-if="captchaCountdown" class="cursor-pointer">
-                  {{ captchaCountdown }}s
-                </span>
-                <span
-                  v-else
-                  class="cursor-pointer"
-                  @click="sendTheVerificationCode"
-                >
-                  验证码
-                </span>
-              </template>
-            </el-input>
-          </el-form-item>
+        <el-form-item v-if="!isLogin" prop="code" label="验证码:">
+          <el-input v-model="loginForm.code" placeholder="请输入验证码">
+            <template #append>
+              <span v-if="captchaCountdown" class="cursor-pointer">
+                {{ captchaCountdown }}s
+              </span>
+              <span
+                v-else
+                class="cursor-pointer"
+                @click="sendTheVerificationCode"
+              >
+                验证码
+              </span>
+            </template>
+          </el-input>
+        </el-form-item>
 
-          <el-form-item prop="password" label="密码">
-            <el-input
-              v-model="loginForm.password"
-              show-password
-              type="password"
-            />
-          </el-form-item>
-        </el-form>
+        <el-form-item prop="password" label="密码">
+          <el-input
+            v-model="loginForm.password"
+            show-password
+            type="password"
+          />
+        </el-form-item>
+      </el-form>
 
-        <el-button type="primary" class="w-6/12" @click="loginOrRegister">
-          {{ loginButText }}
-        </el-button>
+      <el-button type="primary" class="w-full" @click="loginOrRegister">
+        {{ loginButText }}
+      </el-button>
 
-        <p
-          class="mt-4 text-sm text-gray-300 cursor-pointer hover:text-blue-400"
-          @click="pageTypeChange"
-        >
-          {{ tipsText }}
-        </p>
-      </div>
+      <p
+        class="mt-4 text-sm text-gray-300 cursor-pointer hover:text-blue-400"
+        @click="pageTypeChange"
+      >
+        {{ tipsText }}
+      </p>
     </div>
   </div>
 </template>
@@ -238,5 +238,7 @@ function loginOrRegister() {
 .login-box {
   width: 100vw;
   height: 100vh;
+  background: url('@/assets/img/login-bg.jpg') no-repeat center;
+  background-size: 100% 100%;
 }
 </style>

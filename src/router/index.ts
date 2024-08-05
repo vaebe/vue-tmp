@@ -1,7 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import type { RouteLocationNormalized, RouteRecordRaw } from 'vue-router'
 import NProgress from 'nprogress'
-import { useUserStore } from '@/stores'
 
 // 保存进入登录页面的路径
 function saveEnterTheLoginPagePath(path: string): void {
@@ -13,7 +11,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'layout',
-    redirect: (to: RouteLocationNormalized) => {
+    redirect: (to: RouteLocation) => {
       return `${to.path}login`
     },
     component: () => import('@/components/ViewComponent.vue'),
