@@ -1,11 +1,14 @@
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from 'element-plus'
-import { computed, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
 import { cloneDeep } from 'lodash-es'
-import { useRoute, useRouter } from 'vue-router'
 import { getVerificationCode, userLogin, userRegister } from '@/api/login'
-import { useUserStore } from '@/stores'
 import { Encrypt } from '@/utils/password'
+
+// 浅色主题
+const mode = useColorMode({
+  attribute: 'class',
+})
+mode.value = 'light'
 
 const { VITE_APP_TITLE } = import.meta.env
 
