@@ -11,7 +11,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'layout',
-    redirect: (to: RouteLocationNormalized) => {
+    redirect: (to: RouteLocation) => {
       return `${to.path}login`
     },
     component: () => import('@/components/ViewComponent.vue'),
