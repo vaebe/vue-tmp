@@ -13,7 +13,7 @@
       "@/*": ["src/*"]
     },
     "resolveJsonModule": true,
-    "types": ["vite/client", "pinia-plugin-persist", "element-plus/global"],
+    "types": ["vite/client", "pinia-plugin-persist", "element-plus/global", "miragejs/types"],
     "allowImportingTsExtensions": true,
     /* Linting */
     "strict": true,
