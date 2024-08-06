@@ -15,7 +15,6 @@ interface ImportMetaEnv {
   readonly VITE_APP_TITLE: string
   readonly VITE_APP_AXIOS_TIMEOUT: string
   readonly VITE_APP_BASE_URL: string
-  readonly VITE_APP_WS_URL: string
 }
 
 interface ImportMeta {
