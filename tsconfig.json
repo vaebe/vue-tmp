@@ -24,6 +24,7 @@
     "allowSyntheticDefaultImports": true,
     "isolatedModules": true,
     "skipLibCheck": true,
+    "esModuleInterop": true,
   },
   "references": [
     {
