@@ -2,52 +2,41 @@ import Api from './base'
 import type { ResultData } from './base'
 
 export interface UserInfo {
-  avatar: string
-  createdAt: string
-  gender: string
-  id: number
+  id: string
+  email: string
   nickName: string
-  password: string
-  phoneNumber: string
+  accountType: string
   role: string
-  updatedAt: string
-  userAccount: string
+  avatar: string
 }
 
 export interface LoginResData {
   token: string
-  expired_at: number
+  tokenExpire: string
   userInfo: UserInfo
 }
 
 export interface LoginParams {
-  password: string
-  userAccount: string
-  code: string
-}
-
-export interface EmailVerificationCodeParams {
   email: string
+  password: string
 }
 
 // 用户登录
 export function userLogin(data: LoginParams): Promise<ResultData<LoginResData>> {
-  return Api.post('/user/login', data)
+  return Api.post('/login/emailLogin', data)
+}
+
+// 用户退出登录
+export function userLoginOut(): Promise<ResultData<null>> {
+  return Api.get('/login/signOut')
 }
 
 // 获取邮箱验证码
-export function getVerificationCode(data: EmailVerificationCodeParams): Promise<ResultData<string>> {
+export function getVerificationCode(data: { email: string }): Promise<ResultData<string>> {
   return Api.post('/user/getVerificationCode', data)
 }
 
 // 用户注册
 export function userRegister(data: LoginParams): Promise<ResultData<LoginResData>> {
-  return Api.post('/user/register', data)
-}
-
-// 获取用户详情
-export function getUserDetails(params: {
-  id: number
-}): Promise<ResultData<UserInfo>> {
-  return Api.get('/user/details', { params })
+  return Api.post('/user/registration', data)
 }

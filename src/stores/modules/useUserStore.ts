@@ -1,7 +1,6 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { getUserDetails } from '@/api/login'
 import type { LoginResData, UserInfo } from '@/api/login'
 import { resetObjToPrimitiveType } from '@/utils/tool'
 
@@ -12,13 +11,14 @@ const useUserStore = defineStore(
       avatar: '',
       createdAt: '',
       gender: '',
-      id: 0,
+      id: '',
       nickName: '',
       password: '',
       phoneNumber: '',
       role: '',
       updatedAt: '',
-      userAccount: '',
+      email: '',
+      accountType: '',
     })
 
     const loginResData = reactive({
@@ -56,9 +56,7 @@ const useUserStore = defineStore(
 
     // 刷新用户信息
     const refreshUserInfo = (): void => {
-      getUserDetails({ id: userInfo.id }).then((res) => {
-        Object.assign(userInfo, res.data)
-      })
+
     }
 
     const isLogin = computed(() => !!loginResData.userInfo.id)

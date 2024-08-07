@@ -1,66 +1,99 @@
 import { HttpResponse, http } from 'msw'
+import dayjs from 'dayjs'
+import { v4 as uuidv4 } from 'uuid'
+import type { LoginParams } from '@/api/login'
+import type { UserInfo } from '@/api/user'
+import { Decrypt } from '@/utils/password'
 
-interface User {
-  id: number
-  username: string
-  password: string
-}
+type RequireUserInfo = Required<UserInfo>
 
-interface UserResponse {
-  id: number
-  username: string
-}
-
-interface LoginRequestBody {
-  username: string
-  password: string
-}
-
-const users: User[] = [
-  { id: 1, username: 'user1', password: 'password1' },
-  { id: 2, username: 'user2', password: 'password2' },
+const userList: UserInfo[] = [
+  {
+    id: '1bofj153qd3188su7qb00u5n6oh',
+    email: 'admin@qq.com',
+    password: '123456',
+    nickName: 'kkf2Pg',
+    accountType: '01',
+    role: '01',
+    updatedAt: '2024-07-28 22:04:04',
+    createdAt: '2024-07-28 22:04:04',
+    avatar: 'https://api.dicebear.com/7.x/bottts-neutral/svg?seed=kkf2Pg&size=64',
+  },
+  {
+    id: '1n3o6n1qh7d2uywa45y8100xweg0w',
+    email: 'test@qq.com',
+    password: '123456',
+    nickName: 'kklpCj',
+    accountType: '01',
+    role: '01',
+    updatedAt: '2024-07-21 13:28:33',
+    createdAt: '2024-07-21 13:28:33',
+    avatar: 'https://api.dicebear.com/7.x/bottts-neutral/svg?seed=kklpCj&size=64',
+  },
 ]
 
 export const handlers = [
   // 登录接口
-  http.post<LoginRequestBody, LoginRequestBody>('/api/user/login', async ({ request }) => {
-    const { username, password } = await request.json()
-    const user = users.find(user => user.username === username && user.password === password)
+  http.post<LoginParams, LoginParams>('/api/login/emailLogin', async ({ request }) => {
+    const { email, password } = await request.json()
+    const user = userList.find(user => user.email === email && user.password === Decrypt(password))
 
-    if (user)
-      return HttpResponse.json<UserResponse>({ id: user.id, username: user.username }, { status: 200 })
-    else
+    if (user) {
+      user.password = ''
+      return HttpResponse.json<UserInfo>(user, { status: 200 })
+    }
+    else {
       return HttpResponse.json({ message: 'Invalid username or password' }, { status: 401 })
+    }
   }),
 
   // 注册接口
-  http.post('/register', async ({ request }) => {
-    const { username, password } = await request.json()
-    const userExists = users.some(user => user.username === username)
+  http.post<LoginParams, LoginParams>('api/user/registration', async ({ request }) => {
+    const { email, password } = await request.json()
+
+    const userExists = userList.some(user => user.email === email)
 
     if (userExists) {
-      return HttpResponse.json({ message: 'User already exists' }, { status: 409 })
+      return HttpResponse.json({ message: '用户已经存在请直接登录!' }, { status: 409 })
     }
     else {
-      const newUser: User = { id: users.length + 1, username, password }
-      users.push(newUser)
-      return HttpResponse.json<UserResponse>({ id: newUser.id, username: newUser.username }, { status: 201 })
+      const newUser: UserInfo = {
+        id: uuidv4(),
+        email,
+        password,
+        nickName: 'kkf2Pg',
+        accountType: '01',
+        role: '01',
+        updatedAt: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+        createdAt: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+        avatar: 'https://api.dicebear.com/7.x/bottts-neutral/svg?seed=kkf2Pg&size=64',
+      }
+
+      userList.push(newUser)
+
+      newUser.password = ''
+      return HttpResponse.json<UserInfo>(newUser, { status: 201 })
     }
   }),
 
   // 获取用户列表
-  http.get('/users', () => {
-    const userResponses: UserResponse[] = users.map(user => ({ id: user.id, username: user.username }))
-    return HttpResponse.json(userResponses, { status: 200 })
+  http.get('api/user/getList', () => {
+    const list: UserInfo[] = userList.map((user) => {
+      return {
+        ...user,
+        password: '',
+      }
+    })
+    return HttpResponse.json(list, { status: 200 })
   }),
 
   // 删除用户
-  http.delete('/users/:userId', ({ params }) => {
+  http.delete('api/user/:userId', ({ params }) => {
     const { userId } = params
-    const index = users.findIndex(user => user.id === Number.parseInt(userId as string))
+    const index = userList.findIndex(user => user.id === userId)
 
     if (index > -1) {
-      users.splice(index, 1)
+      userList.splice(index, 1)
       return HttpResponse.json({ message: 'User deleted' }, { status: 200 })
     }
     else {
@@ -69,15 +102,14 @@ export const handlers = [
   }),
 
   // 更新用户
-  http.put('/users/:userId', async ({ request, params }) => {
-    const { userId } = params
-    const { username, password } = await request.json()
-    const user = users.find(user => user.id === Number.parseInt(userId))
+  http.put<RequireUserInfo, UserInfo>('api/user/:userId', async ({ request, params }) => {
+    const { id } = params
+    const newUserInfo = await request.json()
+
+    const user = userList.find(user => user.id === id)
 
     if (user) {
-      user.username = username || user.username
-      user.password = password || user.password
-      return HttpResponse.json<UserResponse>({ id: user.id, username: user.username }, { status: 200 })
+      return HttpResponse.json<UserInfo>({ ...user, ...newUserInfo }, { status: 200 })
     }
     else {
       return HttpResponse.json({ message: 'User not found' }, { status: 404 })

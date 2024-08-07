@@ -60,43 +60,22 @@ onBeforeUnmount(() => {
 const { setLoginResData } = useUserStore()
 
 const loginForm = reactive({
-  userAccount: '',
+  email: '',
   password: '',
   code: '',
 })
 
 const loginFormRules = reactive<FormRules>({
-  userAccount: [
-    {
-      required: true,
-      message: '账号不能为空！',
-      trigger: 'blur',
-    },
-    {
-      type: 'email',
-      message: '请输入正确的邮箱地址！',
-      trigger: ['blur', 'change'],
-    },
+  email: [
+    { required: true, message: '账号不能为空！', trigger: 'blur' },
+    { type: 'email', message: '请输入正确的邮箱地址！', trigger: ['blur', 'change'] },
   ],
   password: [
-    {
-      required: true,
-      message: '密码不能为空！',
-      trigger: 'blur',
-    },
+    { required: true, message: '密码不能为空！', trigger: 'blur' },
   ],
   code: [
-    {
-      required: true,
-      message: '验证码不能为空！',
-      trigger: 'blur',
-    },
-    {
-      min: 6,
-      max: 6,
-      message: '请输入六位验证码！',
-      trigger: 'blur',
-    },
+    { required: true, message: '验证码不能为空！', trigger: 'blur' },
+    { min: 6, max: 6, message: '请输入六位验证码！', trigger: 'blur' },
   ],
 })
 
@@ -109,10 +88,10 @@ function sendTheVerificationCode() {
     return
 
   // 验证用户账号是否填写正确
-  loginFormRef.value?.validateField('userAccount', (valid) => {
+  loginFormRef.value?.validateField('email', (valid) => {
     if (valid) {
       // 发送验证码
-      getVerificationCode({ email: loginForm.userAccount }).then(() => {
+      getVerificationCode({ email: loginForm.email }).then(() => {
         ElMessage.success('验证码发送成功！')
 
         // 验证码发送成功开始倒计时
@@ -166,10 +145,17 @@ function login() {
 function loginOrRegister() {
   // 校验表单数据是否填写正确，正确调用对应的函数，错误则进行提示
   loginFormRef.value?.validate((val) => {
-    if (val)
-      isLogin.value ? login() : register()
-    else
+    if (val) {
+      if (isLogin.value) {
+        login()
+      }
+      else {
+        register()
+      }
+    }
+    else {
       ElMessage.warning('请检查表单是否填写正确！')
+    }
   })
 }
 </script>
@@ -190,8 +176,8 @@ function loginOrRegister() {
         :rules="loginFormRules"
         :label-width="isLogin ? '52px' : '70px'"
       >
-        <el-form-item prop="userAccount" label="账号">
-          <el-input v-model="loginForm.userAccount" />
+        <el-form-item prop="email" label="账号">
+          <el-input v-model="loginForm.email" />
         </el-form-item>
 
         <el-form-item v-if="!isLogin" prop="code" label="验证码:">
