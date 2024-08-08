@@ -32,6 +32,11 @@ const userList: UserInfo[] = [
   },
 ]
 
+function sendJson(code: number, data: any, msg: string = '') {
+  const info = { code, data, msg }
+  return HttpResponse.json(info, { status: 200 })
+}
+
 export const handlers = [
   // 登录接口
   http.post<LoginParams, LoginParams>('/api/login/emailLogin', async ({ request }) => {
@@ -40,10 +45,10 @@ export const handlers = [
 
     if (user) {
       user.password = ''
-      return HttpResponse.json<UserInfo>(user, { status: 200 })
+      return sendJson(0, user)
     }
     else {
-      return HttpResponse.json({ message: 'Invalid username or password' }, { status: 401 })
+      return sendJson(401, null, '用户名或密码不正确!')
     }
   }),
 
@@ -54,7 +59,7 @@ export const handlers = [
     const userExists = userList.some(user => user.email === email)
 
     if (userExists) {
-      return HttpResponse.json({ message: '用户已经存在请直接登录!' }, { status: 409 })
+      return sendJson(409, null, '用户已经存在请直接登录!')
     }
     else {
       const newUser: UserInfo = {
@@ -72,7 +77,7 @@ export const handlers = [
       userList.push(newUser)
 
       newUser.password = ''
-      return HttpResponse.json<UserInfo>(newUser, { status: 201 })
+      return sendJson(0, newUser)
     }
   }),
 
@@ -84,7 +89,8 @@ export const handlers = [
         password: '',
       }
     })
-    return HttpResponse.json(list, { status: 200 })
+
+    return sendJson(0, list)
   }),
 
   // 删除用户
@@ -94,10 +100,10 @@ export const handlers = [
 
     if (index > -1) {
       userList.splice(index, 1)
-      return HttpResponse.json({ message: 'User deleted' }, { status: 200 })
+      return sendJson(0, null, 'User deleted')
     }
     else {
-      return HttpResponse.json({ message: 'User not found' }, { status: 404 })
+      return sendJson(-1, null, 'User not found')
     }
   }),
 
@@ -109,10 +115,10 @@ export const handlers = [
     const user = userList.find(user => user.id === id)
 
     if (user) {
-      return HttpResponse.json<UserInfo>({ ...user, ...newUserInfo }, { status: 200 })
+      return sendJson(0, { ...user, ...newUserInfo })
     }
     else {
-      return HttpResponse.json({ message: 'User not found' }, { status: 404 })
+      return sendJson(-1, null, 'User not found')
     }
   }),
 ]
