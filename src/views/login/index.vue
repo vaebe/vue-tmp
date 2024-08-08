@@ -5,8 +5,6 @@ import { useCountdown } from './composables/useCountdown'
 import { getVerificationCode, userLogin, userRegister } from '@/api/login'
 import { Encrypt } from '@/utils/password'
 
-const { VITE_APP_TITLE } = import.meta.env
-
 const loginForm = reactive({
   email: '',
   password: '',
@@ -112,11 +110,11 @@ function loginOrRegister() {
 
 <template>
   <div class="login-box flex items-center justify-center">
-    <div class="login-content">
-      <div class="w-4/12 text-white">
-        {{ VITE_APP_TITLE }}
+    <div class="login-content h-[412px]">
+      <div class="w-[275px]  text-white">
+        <img src="@/assets/img/login/left-bg.png" alt="" width="100%" height="100%">
       </div>
-      <div class="w-8/12 px-4 py-8">
+      <div class="w-[430px] h-full px-8 py-8">
         <h1 class="text-3xl tracking-widest text-white">
           欢迎登录
         </h1>
@@ -125,7 +123,7 @@ function loginOrRegister() {
         </h2>
         <el-form
           ref="loginFormRef"
-          class="w-full py-4 px-2 mb-2"
+          class="w-full mb-2"
           :model="loginForm"
           :rules="loginFormRules"
           :label-width="0"
@@ -153,7 +151,7 @@ function loginOrRegister() {
           </el-form-item>
         </el-form>
 
-        <el-button type="primary" size="large" round class="w-full" @click="loginOrRegister">
+        <el-button type="primary" size="large" round class="login-but w-full" @click="loginOrRegister">
           {{ loginButText }}
         </el-button>
 
@@ -172,7 +170,7 @@ function loginOrRegister() {
 .login-box {
   width: 100vw;
   height: 100vh;
-  background: url('@/assets/img/login-bg.jpg') no-repeat center;
+  background: url('@/assets/img/login/bg.jpg') no-repeat center;
   background-size: 100% 100%;
 
   &::before {
@@ -192,7 +190,8 @@ function loginOrRegister() {
     z-index: 10;
     display: flex;
     align-items: center;
-    min-width: 720px;
+    min-width: 680px;
+    overflow: hidden;
     border-radius: 12px;
     border: 1px solid;
     border-color: #1e3139;
@@ -226,6 +225,24 @@ function loginOrRegister() {
     box-shadow: none;
     color: #fff;
     width: 100%;
+  }
+
+  .el-input__inner {
+    color: #fff;
+  }
+
+  .el-input-group__append {
+    background: transparent;
+    border: transparent;
+    box-shadow: none;
+    background: #0d1116;
+    border-radius: 0 12px 12px 0;
+    color: #72e528;
+  }
+
+  .login-but {
+    color: #0d1116;
+    background: linear-gradient(89.86deg, #82fac2, #47d4ff);
   }
 }
 </style>
