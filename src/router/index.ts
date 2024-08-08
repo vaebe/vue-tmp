@@ -1,12 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import NProgress from 'nprogress'
 
-// 保存进入登录页面的路径
-function saveEnterTheLoginPagePath(path: string): void {
-  const { setEnterTheLoginPagePath } = useUserStore()
-  setEnterTheLoginPagePath(path)
-}
-
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -23,10 +17,6 @@ const routes: RouteRecordRaw[] = [
     meta: {
       title: '登录',
     },
-    beforeEnter: (_to, from) => {
-      saveEnterTheLoginPagePath(from.fullPath)
-      return true
-    },
     component: () => import('@/views/login/index.vue'),
   },
   {
@@ -35,11 +25,15 @@ const routes: RouteRecordRaw[] = [
     meta: {
       title: '注册',
     },
-    beforeEnter: (_to, from) => {
-      saveEnterTheLoginPagePath(from.fullPath)
-      return true
-    },
     component: () => import('@/views/login/index.vue'),
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    meta: {
+      name: '404',
+    },
+    component: () => import('@/views/errorPage/error404.vue'),
   },
 ]
 
