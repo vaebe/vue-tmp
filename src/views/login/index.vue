@@ -1,63 +1,11 @@
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from 'element-plus'
 import { cloneDeep } from 'lodash-es'
+import { useCountdown } from './composables/useCountdown'
 import { getVerificationCode, userLogin, userRegister } from '@/api/login'
 import { Encrypt } from '@/utils/password'
 
-// 浅色主题
-const mode = useColorMode({
-  attribute: 'class',
-})
-mode.value = 'light'
-
 const { VITE_APP_TITLE } = import.meta.env
-
-// 验证码倒计时
-const captchaCountdown = ref(0)
-
-// 验证码的定时器
-let captchaCountdownTimer = 0
-// 清除获取验证码的定时器
-function clearCaptchaCountdownTimer() {
-  window.clearInterval(captchaCountdownTimer)
-}
-
-// 开始倒计时
-function startCaptchaCountdown() {
-  captchaCountdown.value = 60
-
-  // 开始定时器
-  captchaCountdownTimer = window.setInterval(() => {
-    captchaCountdown.value -= 1
-    // 缓存倒计时
-    localStorage.setItem('captchaCountdown', `${captchaCountdown.value}`)
-
-    // 倒计时小于 1 赋值 0 并清除定时器
-    if (captchaCountdown.value < 1) {
-      captchaCountdown.value = 0
-      clearCaptchaCountdownTimer()
-    }
-  }, 1000)
-}
-
-onMounted(() => {
-  // 获取缓存的倒计时
-  const storeCaptchaCountdown = Number.parseInt(
-    window.localStorage.getItem('captchaCountdown') || '0',
-  )
-  captchaCountdown.value = storeCaptchaCountdown
-
-  // 缓存的倒计时不等于 0 时继续进行倒计时
-  if (storeCaptchaCountdown !== 0)
-    startCaptchaCountdown()
-})
-
-// 页面销毁前清除定时器
-onBeforeUnmount(() => {
-  clearCaptchaCountdownTimer()
-})
-
-const { setLoginResData } = useUserStore()
 
 const loginForm = reactive({
   email: '',
@@ -81,10 +29,11 @@ const loginFormRules = reactive<FormRules>({
 
 const loginFormRef = ref<FormInstance>()
 
+const { countdown, startCountdown } = useCountdown()
 // 发送验证码
 function sendTheVerificationCode() {
   // 获取验证码倒计时大于 0 直接返回
-  if (captchaCountdown.value > 0)
+  if (countdown.value > 0)
     return
 
   // 验证用户账号是否填写正确
@@ -95,7 +44,7 @@ function sendTheVerificationCode() {
         ElMessage.success('验证码发送成功！')
 
         // 验证码发送成功开始倒计时
-        startCaptchaCountdown()
+        startCountdown()
       })
     }
     else {
@@ -120,6 +69,8 @@ function pageTypeChange() {
   router.push(isLogin.value ? 'register' : 'login')
 }
 
+const { setLoginResData } = useUserStore()
+
 // 注册
 function register() {
   userRegister(loginForm).then((res) => {
@@ -143,7 +94,6 @@ function login() {
 
 // 登录或者注册
 function loginOrRegister() {
-  // 校验表单数据是否填写正确，正确调用对应的函数，错误则进行提示
   loginFormRef.value?.validate((val) => {
     if (val) {
       if (isLogin.value) {
@@ -162,60 +112,58 @@ function loginOrRegister() {
 
 <template>
   <div class="login-box flex items-center justify-center">
-    <div class="w-[360px] flex flex-col items-center">
-      <h1 class="text-4xl tracking-widest text-white">
+    <div class="login-content">
+      <div class="w-4/12 text-white">
         {{ VITE_APP_TITLE }}
-      </h1>
-      <h2 class="mt-4 mb-6 text-sm tracking-widest text-gray-400">
-        有些事情总要试一试！
-      </h2>
-      <el-form
-        ref="loginFormRef"
-        class="w-full py-4 px-2 mb-2 rounded-sm bg-gray-50"
-        :model="loginForm"
-        :rules="loginFormRules"
-        :label-width="isLogin ? '52px' : '70px'"
-      >
-        <el-form-item prop="email" label="账号">
-          <el-input v-model="loginForm.email" />
-        </el-form-item>
+      </div>
+      <div class="w-8/12 px-4 py-8">
+        <h1 class="text-3xl tracking-widest text-white">
+          欢迎登录
+        </h1>
+        <h2 class="mt-2 mb-6 text-sm tracking-widest text-gray-500">
+          有些事情总要试一试！
+        </h2>
+        <el-form
+          ref="loginFormRef"
+          class="w-full py-4 px-2 mb-2"
+          :model="loginForm"
+          :rules="loginFormRules"
+          :label-width="0"
+          size="large"
+        >
+          <el-form-item prop="email" label="">
+            <el-input v-model="loginForm.email" placeholder="请输入账号" />
+          </el-form-item>
 
-        <el-form-item v-if="!isLogin" prop="code" label="验证码:">
-          <el-input v-model="loginForm.code" placeholder="请输入验证码">
-            <template #append>
-              <span v-if="captchaCountdown" class="cursor-pointer">
-                {{ captchaCountdown }}s
-              </span>
-              <span
-                v-else
-                class="cursor-pointer"
-                @click="sendTheVerificationCode"
-              >
-                验证码
-              </span>
-            </template>
-          </el-input>
-        </el-form-item>
+          <el-form-item v-if="!isLogin" prop="code" label="">
+            <el-input v-model="loginForm.code" placeholder="请输入验证码">
+              <template #append>
+                <span v-if="countdown" class="cursor-pointer">
+                  {{ countdown }}s
+                </span>
+                <span v-else class="cursor-pointer" @click="sendTheVerificationCode">
+                  验证码
+                </span>
+              </template>
+            </el-input>
+          </el-form-item>
 
-        <el-form-item prop="password" label="密码">
-          <el-input
-            v-model="loginForm.password"
-            show-password
-            type="password"
-          />
-        </el-form-item>
-      </el-form>
+          <el-form-item prop="password" label="">
+            <el-input v-model="loginForm.password" show-password placeholder="请输入密码" type="password" />
+          </el-form-item>
+        </el-form>
 
-      <el-button type="primary" class="w-full" @click="loginOrRegister">
-        {{ loginButText }}
-      </el-button>
+        <el-button type="primary" size="large" round class="w-full" @click="loginOrRegister">
+          {{ loginButText }}
+        </el-button>
 
-      <p
-        class="mt-4 text-sm text-gray-300 cursor-pointer hover:text-blue-400"
-        @click="pageTypeChange"
-      >
-        {{ tipsText }}
-      </p>
+        <p
+          class="mt-4 text-sm text-gray-300 cursor-pointer hover:text-blue-400 text-center"
+          @click="pageTypeChange"
+        >
+          {{ tipsText }}
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -226,5 +174,58 @@ function loginOrRegister() {
   height: 100vh;
   background: url('@/assets/img/login-bg.jpg') no-repeat center;
   background-size: 100% 100%;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    backdrop-filter: blur(6px);
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .login-content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    min-width: 720px;
+    border-radius: 12px;
+    border: 1px solid;
+    border-color: #1e3139;
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+    background-image: linear-gradient(
+        252.37deg,
+        #1b262b 0.55%,
+        #171b21,
+        #191d23 90.08%
+      ),
+      linear-gradient(
+        68.56deg,
+        #1e2930 29.44%,
+        #1d1d1d 59.6%,
+        #262a2f 82.91%,
+        #2e4141 101.21%
+      );
+  }
+}
+</style>
+
+<style lang="scss">
+.login-content {
+  .el-input--large .el-input__wrapper {
+    --el-input-border-radius: 12px;
+    padding: 4px 15px;
+    transition: all 0.1s;
+    background: #0d1116;
+    border: transparent;
+    box-shadow: none;
+    color: #fff;
+    width: 100%;
+  }
 }
 </style>
