@@ -9,7 +9,17 @@ const routes: RouteRecordRaw[] = [
       return `${to.path}login`
     },
     component: () => import('@/components/ViewComponent.vue'),
-    children: [],
+    children: [
+      {
+        path: 'user',
+        name: 'user',
+        meta: {
+          title: '用户管理',
+          icon: 'tdesign:institution-checked',
+        },
+        component: () => import('@/views/user/index.vue'),
+      },
+    ],
   },
   {
     path: '/login',
@@ -46,21 +56,7 @@ router.beforeEach((to, from, next) => {
   if (to.path !== from.path)
     NProgress.start()
 
-  const userStore = useUserStore()
-
-  // 进入后台管理页面 是管理员直接方形，否则提示并导航到首页
-  if (to.fullPath.includes('backstage')) {
-    if (userStore.isAdmin) {
-      next()
-    }
-    else {
-      ElMessage.warning('您没有权限进入！')
-      next('/')
-    }
-  }
-  else {
-    next()
-  }
+  next()
 })
 
 router.afterEach(() => {

@@ -42,11 +42,7 @@ const useUserStore = defineStore(
     const setLoginResData = (data: LoginResData): void => {
       Object.assign(loginResData, data)
       Object.assign(userInfo, data.userInfo)
-
-      if (isAdmin.value)
-        router.push('/backstage')
-      else
-        router.push(enterTheLoginPagePath.value)
+      router.push('/user')
     }
 
     // 获取用户信息
