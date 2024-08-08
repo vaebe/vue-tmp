@@ -8,7 +8,7 @@ const routes: RouteRecordRaw[] = [
     redirect: (to: RouteLocation) => {
       return `${to.path}login`
     },
-    component: () => import('@/components/ViewComponent.vue'),
+    component: () => import('@/views/layout/baseLayout.vue'),
     children: [
       {
         path: 'user',
