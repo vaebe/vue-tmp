@@ -26,6 +26,7 @@ const routes: RouteRecordRaw[] = [
     name: 'login',
     meta: {
       title: '登录',
+      icon: '',
     },
     component: () => import('@/views/login/index.vue'),
   },
@@ -34,6 +35,7 @@ const routes: RouteRecordRaw[] = [
     name: 'register',
     meta: {
       title: '注册',
+      icon: '',
     },
     component: () => import('@/views/login/index.vue'),
   },
@@ -41,7 +43,8 @@ const routes: RouteRecordRaw[] = [
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     meta: {
-      name: '404',
+      title: '404',
+      icon: '',
     },
     component: () => import('@/views/errorPage/error404.vue'),
   },
