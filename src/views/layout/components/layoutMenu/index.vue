@@ -53,27 +53,27 @@ const defaultActiveMenu = computed(() => {
         :collapse-transition="false"
         :collapse="menuCollapse"
       >
-        <template v-for="item in menuTreeData" :key="item.url">
+        <template v-for="item in menuTreeData" :key="item.path">
           <!-- 有子路由  -->
 
-          <el-sub-menu v-if="item.children && item.children.length !== 0" :index="item.url">
+          <el-sub-menu v-if="item.children && item.children.length !== 0" :index="item.path">
             <template #title>
-              <Icon :icon="item.icon" width="18px" height="18px" class="mr-0.5" />
-              <span>{{ item.name }}</span>
+              <Icon :icon="item.meta!.icon" width="18px" height="18px" class="mr-0.5" />
+              <span>{{ item.meta?.title }}</span>
             </template>
 
             <el-menu-item
               v-for="subItem in item.children"
-              :key="subItem.url"
-              :index="subItem.url"
+              :key="subItem.path"
+              :index="subItem.path"
             >
-              <span>{{ subItem.name }}</span>
+              <span>{{ subItem.meta?.title }}</span>
             </el-menu-item>
           </el-sub-menu>
 
           <!-- 无子路由 -->
-          <el-menu-item v-else :index="item.url">
-            <Icon :icon="item.icon" width="18px" height="18px" class="mr-0.5" />
+          <el-menu-item v-else :index="item.path">
+            <Icon :icon="item.meta!.icon" width="18px" height="18px" class="mr-0.5" />
             <template #title>
               <span>
                 {{ item.name }}

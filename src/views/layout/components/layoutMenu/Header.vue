@@ -9,9 +9,8 @@ function jumpHome() {
 
 <template>
   <div class="menu-header" @click="jumpHome">
-    <div class="menu-header__icon">
-      <img src="/logo.svg" alt="logo">
-    </div>
+    <img src="/logo.svg" alt="logo" class="menu-header__icon">
+
     <p v-if="!menuCollapse" class="menu-header__title">
       kk-admin
     </p>
@@ -30,7 +29,7 @@ function jumpHome() {
   border-bottom: 1px solid #f5f5f5;
 
   &__icon {
-    width: 38%;
+    width: 38px;
     height: 38px;
   }
 
