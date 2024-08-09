@@ -82,7 +82,7 @@ export const handlers = [
   }),
 
   // 获取用户列表
-  http.get('api/user/getList', () => {
+  http.post('api/user/getList', () => {
     const list: UserInfo[] = userList.map((user) => {
       return {
         ...user,
@@ -90,7 +90,14 @@ export const handlers = [
       }
     })
 
-    return sendJson(0, list)
+    const data = {
+      list,
+      pageNo: 1,
+      pageSize: 10,
+      total: list.length,
+    }
+
+    return sendJson(0, data)
   }),
 
   // 删除用户
