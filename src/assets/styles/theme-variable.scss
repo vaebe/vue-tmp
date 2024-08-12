@@ -1,0 +1,28 @@
+// 全局 css 变量
+:root{
+  --layout-menu-width: 240px;
+  // --el-color-primary: #F55142;
+  // --el-color-primary-light-3: #F66A5D;
+  // --el-color-primary-light-5: #F88378;
+  // --el-color-primary-light-7: #F99C93;
+  // --el-color-primary-light-8: #FBB4AE;
+  // --el-color-primary-light-9: #FCCDC9;
+  // --el-color-primary-dark-2: #F74434;
+}
+
+.light{
+  color-scheme: light;
+}
+
+// 页面加载进度条
+#nprogress {
+  .bar{
+    background: var(--el-color-primary)!important;
+  }
+
+  .spinner-icon {
+    border-top-color: var(--el-color-primary)!important;;
+    border-left-color: var(--el-color-primary)!important;;
+  }
+}
+

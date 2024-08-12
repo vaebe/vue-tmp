@@ -24,9 +24,8 @@ function jumpHome() {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: black;
-  background: var(--layout-menu-header-bg);
-  border-bottom: 1px solid #f5f5f5;
+  color: var(--el-text-color-primary);
+  border-bottom: 1px solid var(--el-border-color);
 
   &__icon {
     width: 38px;
