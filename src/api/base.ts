@@ -57,6 +57,7 @@ service.interceptors.response.use(
     if (res.code === 401) {
       const userStore = useUserStore()
       userStore.loginOut()
+      ElMessage.warning(res.msg)
       return Promise.reject(res)
     }
 
