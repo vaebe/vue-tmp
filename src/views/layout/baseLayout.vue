@@ -31,7 +31,7 @@ import LayoutHeader from '@/views/layout/components/layoutHeader/index.vue'
     box-sizing: border-box;
     width: calc(100vw - var(--layout-menu-width));
     height: calc(100vh - 58px);
-    background: rgb(245, 246, 249);
+    background: var(--el-fill-color-lighter);
   }
 }
 </style>

@@ -10,14 +10,17 @@ const { setMenuCollapse } = layoutStore
   <div class="menu-footer">
     <el-icon
       v-if="menuCollapse === false"
-      class="cursor-pointer" size="36" color="black"
+      class="cursor-pointer"
+      size="36"
       @click="setMenuCollapse(true)"
     >
       <Fold />
     </el-icon>
     <el-icon
       v-else
-      class="cursor-pointer" size="36" color="black"
+      class="cursor-pointer"
+      size="36"
+
       @click="setMenuCollapse(false)"
     >
       <Expand />
@@ -32,8 +35,8 @@ const { setMenuCollapse } = layoutStore
   justify-content: center;
   width: 100%;
   height: 40px;
-  border-top: 1px solid #f5f5f5;
-  background: var(--layout-menu-header-bg);
+  color: var(--el-text-color-primary);
+  border-top: 1px solid var(--el-border-color);
   transition: all 0.3s;
 }
 </style>

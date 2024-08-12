@@ -58,7 +58,7 @@ const defaultActiveMenu = computed(() => {
 
           <el-sub-menu v-if="item.children && item.children.length !== 0" :index="item.path">
             <template #title>
-              <Icon :icon="item.meta!.icon" width="18px" height="18px" class="mr-0.5" />
+              <Icon :icon="item.meta!.icon" width="18px" height="18px" class="mr-1" />
               <span>{{ item.meta?.title }}</span>
             </template>
 
@@ -73,10 +73,10 @@ const defaultActiveMenu = computed(() => {
 
           <!-- 无子路由 -->
           <el-menu-item v-else :index="item.path">
-            <Icon :icon="item.meta!.icon" width="18px" height="18px" class="mr-0.5" />
+            <Icon :icon="item.meta!.icon" width="18px" height="18px" class="mr-1" />
             <template #title>
               <span>
-                {{ item.name }}
+                {{ item.meta?.title }}
               </span>
             </template>
           </el-menu-item>
@@ -92,7 +92,6 @@ const defaultActiveMenu = computed(() => {
 .menu-box {
   width: var(--layout-menu-width);
   height: 100vh;
-  background: var(--layout-menu-bg);
   border-right: transparent;
   transition: all 0.3s;
 }

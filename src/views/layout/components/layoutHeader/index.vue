@@ -26,7 +26,7 @@ const ThemeSwitch = defineAsyncComponent(() => import('@/components/ThemeSwitch.
   width: calc(100vw - var(--layout-menu-width));
   height: 58px;
   padding: 0 2vw;
-  border-bottom: 1px solid #f5f5f5;
+  border-bottom: 1px solid var(--el-border-color);
 
   .title {
     display: inline-block;
