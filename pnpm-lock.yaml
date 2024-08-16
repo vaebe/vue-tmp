@@ -120,6 +120,9 @@ importers:
       postcss-html:
         specifier: ^1.7.0
         version: 1.7.0
+      rollup-plugin-gzip:
+        specifier: ^4.0.0
+        version: 4.0.0(rollup@4.20.0)
       rollup-plugin-visualizer:
         specifier: ^5.12.0
         version: 5.12.0(rollup@4.20.0)
@@ -3072,6 +3075,12 @@ packages:
 
   rfdc@1.4.1:
     resolution: {integrity: sha512-q1b3N5QkRUWUl7iyylaaj3kOpIT0N2i9MqIEQXP73GVsN9cw3fdx8X63cEmWhJGi2PPCF23Ijp7ktmd39rawIA==}
+
+  rollup-plugin-gzip@4.0.0:
+    resolution: {integrity: sha512-0T+2fKTZlo4u/5x77xDacjqhpL7GveC+cDL2DZB52Z6gI0Aq9l6zZrxgWlyeHXshvtOLTa4L85zboqsDvGz6LQ==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      rollup: '>=2.0.0'
 
   rollup-plugin-visualizer@5.12.0:
     resolution: {integrity: sha512-8/NU9jXcHRs7Nnj07PF2o4gjxmm9lXIrZ8r175bT9dK8qoLlvKTwRMArRCMgpMGlq8CTLugRvEmyMeMXIU2pNQ==}
@@ -6672,6 +6681,10 @@ snapshots:
   reusify@1.0.4: {}
 
   rfdc@1.4.1: {}
+
+  rollup-plugin-gzip@4.0.0(rollup@4.20.0):
+    dependencies:
+      rollup: 4.20.0
 
   rollup-plugin-visualizer@5.12.0(rollup@4.20.0):
     dependencies:
