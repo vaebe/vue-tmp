@@ -46,24 +46,26 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: [{ find: '@', replacement: resolve(__dirname, 'src') }],
     },
-    rollupOptions: {
-      output: {
-        chunkFileNames: 'assets/js/[name].[hash].js',
-        entryFileNames: 'assets/js/[name].[hash].js',
-        assetFileNames: 'assets/[ext]/[name].[hash].[ext]',
-        manualChunks(id: string) {
-          if (id.includes('node_modules')) {
-            // pnpm兼容
-            const pnpmName = id.includes('.pnpm') ? '.pnpm/' : ''
-            const fileName = `node_modules/${pnpmName}`
+    build: {
+      rollupOptions: {
+        output: {
+          chunkFileNames: 'assets/js/[name].[hash].js',
+          entryFileNames: 'assets/js/[name].[hash].js',
+          assetFileNames: 'assets/[ext]/[name].[hash].[ext]',
+          manualChunks(id: string) {
+            if (id.includes('node_modules')) {
+              // pnpm兼容
+              const pnpmName = id.includes('.pnpm') ? '.pnpm/' : ''
+              const fileName = `node_modules/${pnpmName}`
 
-            const result = id
-              .split(fileName)[1]
-              .split('/')[0]
-              .toString()
+              const result = id
+                .split(fileName)[1]
+                .split('/')[0]
+                .toString()
 
-            return result
-          }
+              return result
+            }
+          },
         },
       },
     },
