@@ -10,7 +10,7 @@ import { version } from './package.json'
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   return {
-    base: mode === 'development' ? '/' : '/vueTmp/',
+    base: mode === 'development' ? '/' : '/vue-tmp/',
     plugins: [
       vue(),
       AutoImport({
