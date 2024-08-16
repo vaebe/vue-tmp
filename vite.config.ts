@@ -5,6 +5,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import { visualizer } from 'rollup-plugin-visualizer'
+import gzipPlugin from 'rollup-plugin-gzip'
 import { version } from './package.json'
 
 // https://vitejs.dev/config/
@@ -40,6 +41,7 @@ export default defineConfig(({ mode }) => {
         resolvers: [ElementPlusResolver()],
       }),
       visualizer(),
+      gzipPlugin({ minSize: 1024 }),
     ],
     resolve: {
       alias: [{ find: '@', replacement: resolve(__dirname, 'src') }],
