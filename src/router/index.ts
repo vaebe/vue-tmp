@@ -19,6 +19,15 @@ const routes: RouteRecordRaw[] = [
         },
         component: () => import('@/views/user/index.vue'),
       },
+      {
+        path: 'genBg',
+        name: 'generateBackground',
+        meta: {
+          title: '生成背景',
+          icon: 'mingcute:background-fill',
+        },
+        component: () => import('@/views/genBg.vue'),
+      },
     ],
   },
   {
