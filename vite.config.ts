@@ -52,6 +52,7 @@ export default defineConfig(({ mode }) => {
           chunkFileNames: 'assets/js/[name].[hash].js',
           entryFileNames: 'assets/js/[name].[hash].js',
           assetFileNames: 'assets/[ext]/[name].[hash].[ext]',
+          msw: ['msw'],
           manualChunks(id: string) {
             if (id.includes('node_modules')) {
               // pnpm兼容
