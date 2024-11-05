@@ -37,9 +37,15 @@ function sendJson(code: number, data: any, msg: string = '') {
   return HttpResponse.json(info, { status: 200 })
 }
 
+function getApiUrl(path: string) {
+  const basePath = import.meta.env.PROD ? '/vue-tmp/' : '/'
+
+  return `${basePath}${path}`
+}
+
 export const handlers = [
   // 登录接口
-  http.post<LoginParams, LoginParams>('/api/login/emailLogin', async ({ request }) => {
+  http.post<LoginParams, LoginParams>(getApiUrl('api/login/emailLogin'), async ({ request }) => {
     const { email, password } = await request.json()
     const user = userList.find(user => user.email === email && user.password === Decrypt(password))
 
@@ -53,7 +59,7 @@ export const handlers = [
   }),
 
   // 注册接口
-  http.post<LoginParams, LoginParams>('/api/user/registration', async ({ request }) => {
+  http.post<LoginParams, LoginParams>(getApiUrl('api/user/registration'), async ({ request }) => {
     const { email, password } = await request.json()
 
     const userExists = userList.some(user => user.email === email)
@@ -82,7 +88,7 @@ export const handlers = [
   }),
 
   // 获取用户列表
-  http.post('/api/user/getList', () => {
+  http.post(getApiUrl('api/user/getList'), () => {
     const list: UserInfo[] = userList.map((user) => {
       return {
         ...user,
@@ -101,7 +107,7 @@ export const handlers = [
   }),
 
   // 删除用户
-  http.delete('/api/user/:userId', ({ params }) => {
+  http.delete(getApiUrl('api/user/:userId'), ({ params }) => {
     const { userId } = params
     const index = userList.findIndex(user => user.id === userId)
 
@@ -115,7 +121,7 @@ export const handlers = [
   }),
 
   // 更新用户
-  http.put<RequireUserInfo, UserInfo>('/api/user/:userId', async ({ request, params }) => {
+  http.put<RequireUserInfo, UserInfo>(getApiUrl('api/user/:userId'), async ({ request, params }) => {
     const { id } = params
     const newUserInfo = await request.json()
 
