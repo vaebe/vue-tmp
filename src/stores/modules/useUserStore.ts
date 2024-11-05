@@ -90,9 +90,8 @@ const useUserStore = defineStore(
   },
   {
     persist: {
-      enabled: true,
-      // 将 userInfo 放到 sessionStorage 做持久化，不设置默认持久化全部数据
-      strategies: [{ storage: sessionStorage, paths: ['loginResData'] }],
+      storage: sessionStorage,
+      pick: ['loginResData'],
     },
   },
 )
