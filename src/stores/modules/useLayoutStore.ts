@@ -31,8 +31,8 @@ const useLayoutStore = defineStore(
   },
   {
     persist: {
-      enabled: true,
-      strategies: [{ storage: localStorage, paths: ['layoutType'] }],
+      storage: localStorage,
+      pick: ['layoutType'],
     },
   },
 )
