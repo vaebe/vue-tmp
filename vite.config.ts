@@ -46,6 +46,13 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: [{ find: '@', replacement: resolve(__dirname, 'src') }],
     },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern',
+        },
+      },
+    },
     build: {
       rollupOptions: {
         output: {
