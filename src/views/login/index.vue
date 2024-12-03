@@ -155,6 +155,10 @@ function loginOrRegister() {
           {{ loginButText }}
         </el-button>
 
+        <p class=" text-center text-gray-500 ">
+          admin@qq.com/123456
+        </p>
+
         <p
           class="mt-4 text-sm text-gray-300 cursor-pointer hover:text-blue-400 text-center"
           @click="pageTypeChange"
