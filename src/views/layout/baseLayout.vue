@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import LayoutMenu from '@/views/layout/components/layoutMenu/index.vue'
 import LayoutHeader from '@/views/layout/components/layoutHeader/index.vue'
+import LayoutMenu from '@/views/layout/components/layoutMenu/index.vue'
 </script>
 
 <template>

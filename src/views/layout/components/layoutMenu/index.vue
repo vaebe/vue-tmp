@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { Icon } from '@iconify/vue'
 import type { RouteRecordRaw } from 'vue-router'
+import { Icon } from '@iconify/vue'
 
 const MenuHeader = defineAsyncComponent(() => import('./Header.vue'))
 const MenuFooter = defineAsyncComponent(() => import('./Footer.vue'))

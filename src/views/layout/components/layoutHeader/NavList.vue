@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router'
 import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 const navList = computed(() => {

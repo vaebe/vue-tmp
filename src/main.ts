@@ -1,8 +1,8 @@
+import { worker } from '@/mocks/browser'
 import { createApp } from 'vue'
+import App from './App.vue'
 import router from './router'
 import store from './stores'
-import App from './App.vue'
-import { worker } from '@/mocks/browser'
 
 import 'ress/ress.css'
 import '@/assets/styles/index.scss'

@@ -1,8 +1,8 @@
+import type { LoginResData, UserInfo } from '@/api/login'
+import { resetObjToPrimitiveType } from '@/utils/tool'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import type { LoginResData, UserInfo } from '@/api/login'
-import { resetObjToPrimitiveType } from '@/utils/tool'
 
 const useUserStore = defineStore(
   'useUserStore',
