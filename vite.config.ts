@@ -8,7 +8,6 @@ import Components from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
 import { version } from './package.json'
 
-// https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   return {
     base: mode === 'development' ? '/' : '/vue-tmp/',
@@ -50,30 +49,6 @@ export default defineConfig(({ mode }) => {
       preprocessorOptions: {
         scss: {
           api: 'modern',
-        },
-      },
-    },
-    build: {
-      rollupOptions: {
-        output: {
-          chunkFileNames: 'assets/js/[name].[hash].js',
-          entryFileNames: 'assets/js/[name].[hash].js',
-          assetFileNames: 'assets/[ext]/[name].[hash].[ext]',
-          msw: ['msw'],
-          manualChunks(id: string) {
-            if (id.includes('node_modules')) {
-              // pnpm兼容
-              const pnpmName = id.includes('.pnpm') ? '.pnpm/' : ''
-              const fileName = `node_modules/${pnpmName}`
-
-              const result = id
-                .split(fileName)[1]
-                .split('/')[0]
-                .toString()
-
-              return result
-            }
-          },
         },
       },
     },

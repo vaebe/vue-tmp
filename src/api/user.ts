@@ -30,13 +30,13 @@ export function saveUserInfo(data: UserInfo): Promise<ResultData<{ id: string }>
 }
 
 // 更新用户信息
-export function updateUserInfo(data: UserInfo): Promise<ResultData<{ id: string }>> {
+export function updateUserInfo(data: UserInfo): Promise<ResultData<string>> {
   return Api.post('/user/update', data)
 }
 
 // 删除用户
 export function removeUser(params: { id: string }): Promise<ResultData<string>> {
-  return Api.delete('/user/delete', { params })
+  return Api.delete(`/user/${params.id}`)
 }
 
 // 获取用户详情
