@@ -45,6 +45,20 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: [{ find: '@', replacement: resolve(__dirname, 'src') }],
     },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'vue': ['vue'],
+            'vue-router': ['vue-router'],
+            '@vueuse/core': ['@vueuse/core'],
+            'axios': ['axios'],
+            'msw': ['msw'],
+            'crypto-js': ['crypto-js'],
+          },
+        },
+      },
+    },
     define: {
       __APP_VERSION__: JSON.stringify(version),
     },
