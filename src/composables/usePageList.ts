@@ -1,7 +1,6 @@
 import type { FormInstance } from 'element-plus'
 import type { ResultData } from '@/api/base'
 import type { AnyObject, PaginationParameter } from '@/types'
-import { ElMessageBox } from 'element-plus'
 import { dataClone, resetObjToPrimitiveType } from '@/utils/tool'
 
 interface PageOptions<T> {

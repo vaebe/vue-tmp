@@ -57,7 +57,9 @@ service.interceptors.response.use(
     if (res.code === 401) {
       const userStore = useUserStore()
       userStore.loginOut()
+
       ElMessage.warning(res.msg)
+
       return Promise.reject(res)
     }
 
@@ -67,6 +69,7 @@ service.interceptors.response.use(
         = typeof res.msg === 'string'
           ? res.msg
           : Object.values(res.msg).join('\r\n')
+
       ElMessage.error(errorText || '非常抱歉，遇到了一些错误！')
       return Promise.reject(errorText || 'error')
     }
