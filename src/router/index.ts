@@ -55,7 +55,7 @@ const routes: RouteRecordRaw[] = [
       title: '404',
       icon: '',
     },
-    component: () => import('@/views/errorPage/error404.vue'),
+    component: () => import('@/views/404.vue'),
   },
 ]
 

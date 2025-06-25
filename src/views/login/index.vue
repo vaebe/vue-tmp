@@ -112,7 +112,7 @@ function loginOrRegister() {
   <div class="login-box flex items-center justify-center">
     <div class="login-content h-[412px]">
       <div class="w-[275px]  text-white">
-        <img src="@/assets/img/login/left-bg.png" alt="" width="100%" height="100%">
+        <img src="/img/login/left-bg.png" alt="" width="100%" height="100%">
       </div>
       <div class="w-[430px] h-full px-8 py-8">
         <h1 class="text-3xl tracking-widest text-white">
@@ -174,7 +174,7 @@ function loginOrRegister() {
 .login-box {
   width: 100vw;
   height: 100vh;
-  background: url('@/assets/img/login/bg.jpg') no-repeat center;
+  background: url('/img/login/bg.jpg') no-repeat center;
   background-size: 100% 100%;
 
   &::before {
@@ -185,8 +185,8 @@ function loginOrRegister() {
     width: 100vw;
     height: 100vh;
     z-index: 0;
-    backdrop-filter: blur(6px);
-    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(2px);
+    background: rgba(0, 0, 0, 0.6);
   }
 
   .login-content {
