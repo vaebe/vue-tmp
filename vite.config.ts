@@ -33,7 +33,7 @@ export default defineConfig(({ mode }) => {
         ],
         dirs: [
           './src/composables',
-          './src/stores',
+          './src/stores/modules',
         ],
       }),
       Components({
@@ -44,13 +44,6 @@ export default defineConfig(({ mode }) => {
     ],
     resolve: {
       alias: [{ find: '@', replacement: resolve(__dirname, 'src') }],
-    },
-    css: {
-      preprocessorOptions: {
-        scss: {
-          api: 'modern',
-        },
-      },
     },
     define: {
       __APP_VERSION__: JSON.stringify(version),

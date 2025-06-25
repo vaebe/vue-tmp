@@ -1,5 +1,5 @@
 import type { InternalAxiosRequestConfig } from 'axios'
-import { useUserStore } from '@/stores'
+import { useUserStore } from '@/stores/modules/useUserStore'
 import axios from 'axios'
 import { stringify } from 'qs'
 

@@ -32,14 +32,12 @@ const useLayoutStore = defineStore(
   {
     persist: {
       storage: localStorage,
-      pick: ['layoutType'],
     },
   },
 )
 
 // 导出 store
 export { useLayoutStore }
-export default useLayoutStore
 
 if (import.meta.hot)
   import.meta.hot.accept(acceptHMRUpdate(useLayoutStore, import.meta.hot))
