@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from 'element-plus'
-import { cloneDeep } from 'lodash-es'
 import { getVerificationCode, userLogin, userRegister } from '@/api/login'
 import { Encrypt } from '@/utils/password'
+import { dataClone } from '@/utils/tool'
 import { useCountdown } from './composables/useCountdown'
 
 const loginForm = reactive({
@@ -79,7 +79,7 @@ function register() {
 
 // 登录
 function login() {
-  const opts = cloneDeep(loginForm)
+  const opts = dataClone(loginForm)
 
   // 对密码进行加密
   opts.password = Encrypt(loginForm.password)

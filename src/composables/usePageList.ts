@@ -2,8 +2,7 @@ import type { FormInstance } from 'element-plus'
 import type { ResultData } from '@/api/base'
 import type { AnyObject, PaginationParameter } from '@/types'
 import { ElMessageBox } from 'element-plus'
-import { cloneDeep } from 'lodash-es'
-import { resetObjToPrimitiveType } from '@/utils/tool'
+import { dataClone, resetObjToPrimitiveType } from '@/utils/tool'
 
 interface PageOptions<T> {
   searchForm?: AnyObject
@@ -178,17 +177,19 @@ export function usePageListDialog(opts: PageListDialogOpts) {
     }
 
     dialogType.value = type
-    if (type === 'add')
+    if (type === 'add') {
       Object.assign(saveForm, resetObjToPrimitiveType(saveForm))
-    else
-      Object.assign(saveForm, cloneDeep(data))
+    }
+    else {
+      Object.assign(saveForm, dataClone(data ?? {}))
+    }
 
     dialogVisible.value = true
 
     await nextTick()
 
     dialogFormRef.value?.clearValidate()
-    openDialogFunc?.(cloneDeep(data ?? {}))
+    openDialogFunc?.(dataClone(data ?? {}))
   }
 
   const save = (): void => {
@@ -198,7 +199,7 @@ export function usePageListDialog(opts: PageListDialogOpts) {
         if (beforeSaveFunc && !(await beforeSaveFunc()))
           return
 
-        const opts = cloneDeep(saveForm)
+        const opts = dataClone(saveForm)
 
         const res
           = dialogType.value === 'add'

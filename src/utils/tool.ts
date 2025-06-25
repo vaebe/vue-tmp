@@ -1,3 +1,5 @@
+import type { AnyObject } from '@/types'
+
 type PrimitiveData = Record<
   string,
   string | number | any[] | Record<string, any> | null
@@ -64,4 +66,12 @@ export function isVideo(url: string): boolean {
  */
 export function getAssetsImgFile(url: string): string {
   return new URL(`../assets/img/${url}`, import.meta.url).href
+}
+
+/**
+ * 克隆对象使用 JSON.parse(JSON.stringify(data))
+ * @param data
+ */
+export function dataClone(data: AnyObject) {
+  return JSON.parse(JSON.stringify(data))
 }
