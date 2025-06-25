@@ -1,5 +1,5 @@
 // 全局 css 变量
-:root{
+:root {
   --layout-menu-width: 240px;
   // --el-color-primary: #F55142;
   // --el-color-primary-light-3: #F66A5D;
@@ -10,19 +10,18 @@
   // --el-color-primary-dark-2: #F74434;
 }
 
-.light{
+.light {
   color-scheme: light;
 }
 
 // 页面加载进度条
 #nprogress {
-  .bar{
-    background: var(--el-color-primary)!important;
+  .bar {
+    background: var(--el-color-primary) !important;
   }
 
   .spinner-icon {
-    border-top-color: var(--el-color-primary)!important;;
-    border-left-color: var(--el-color-primary)!important;;
+    border-top-color: var(--el-color-primary) !important;
+    border-left-color: var(--el-color-primary) !important;
   }
 }
-

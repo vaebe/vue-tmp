@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from 'element-plus'
+import { cloneDeep } from 'lodash-es'
 import { getVerificationCode, userLogin, userRegister } from '@/api/login'
 import { Encrypt } from '@/utils/password'
-import { cloneDeep } from 'lodash-es'
 import { useCountdown } from './composables/useCountdown'
 
 const loginForm = reactive({
@@ -201,7 +201,8 @@ function loginOrRegister() {
     border-color: #1e3139;
     background-clip: padding-box, border-box;
     background-origin: padding-box, border-box;
-    background-image: linear-gradient(252.37deg, #1b262b 0.55%, #171b21, #191d23 90.08%),
+    background-image:
+      linear-gradient(252.37deg, #1b262b 0.55%, #171b21, #191d23 90.08%),
       linear-gradient(68.56deg, #1e2930 29.44%, #1d1d1d 59.6%, #262a2f 82.91%, #2e4141 101.21%);
   }
 }

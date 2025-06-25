@@ -1,12 +1,12 @@
 {
   "name": "vue-tmp",
-  "version": "3.0.1",
   "type": "module",
+  "version": "3.0.1",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint \"src/**/*.{tsx,js,ts,vue}\" --fix",
+    "lint": "eslint --fix",
     "commit": "git-cz",
     "release": "release-it"
   },
@@ -20,6 +20,7 @@
     "dayjs": "^1.11.13",
     "element-plus": "^2.10.2",
     "lodash-es": "^4.17.21",
+    "msw": "^2.10.2",
     "nprogress": "^0.2.0",
     "pinia": "^3.0.3",
     "pinia-plugin-persistedstate": "^4.3.0",
@@ -46,7 +47,6 @@
     "eslint": "^9.29.0",
     "eslint-plugin-format": "^1.0.1",
     "lint-staged": "^16.1.2",
-    "msw": "^2.10.2",
     "postcss": "^8.5.6",
     "postcss-html": "^1.8.0",
     "release-it": "^19.0.3",
@@ -66,7 +66,7 @@
     "commit-msg": "npx commitlint --edit $1"
   },
   "lint-staged": {
-    "src/**/*.{tsx,ts,vue}": [
+    "src/**/*.{ts,vue}": [
       "eslint --fix"
     ]
   },

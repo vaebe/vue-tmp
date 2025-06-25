@@ -1,7 +1,7 @@
 import type { InternalAxiosRequestConfig } from 'axios'
-import { useUserStore } from '@/stores/modules/useUserStore'
 import axios from 'axios'
 import { stringify } from 'qs'
+import { useUserStore } from '@/stores/modules/useUserStore'
 
 export interface ResultData<T> {
   code: number

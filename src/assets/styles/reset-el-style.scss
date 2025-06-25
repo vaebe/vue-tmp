@@ -31,7 +31,8 @@
     width: 100%;
   }
 
-  .el-menu-item,.el-sub-menu__title {
+  .el-menu-item,
+  .el-sub-menu__title {
     --el-menu-item-height: 44px;
     --el-menu-sub-item-height: 44px;
 
@@ -39,7 +40,8 @@
 
     .c-svg-icon {
       svg {
-        path,circle{
+        path,
+        circle {
           stroke: var(--el-text-color-primary) !important;
         }
       }
@@ -65,8 +67,9 @@
 
     .c-svg-icon {
       svg {
-        path,circle{
-          stroke: #ffffff!important;
+        path,
+        circle {
+          stroke: #ffffff !important;
         }
       }
     }
