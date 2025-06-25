@@ -11,7 +11,7 @@ const { setMenuCollapse } = layoutStore
     <el-icon
       v-if="menuCollapse === false"
       class="cursor-pointer"
-      size="36"
+      size="32"
       @click="setMenuCollapse(true)"
     >
       <Fold />
@@ -19,7 +19,7 @@ const { setMenuCollapse } = layoutStore
     <el-icon
       v-else
       class="cursor-pointer"
-      size="36"
+      size="32"
 
       @click="setMenuCollapse(false)"
     >
