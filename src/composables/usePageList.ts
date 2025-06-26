@@ -3,28 +3,26 @@ import type { ResultData } from '@/api/base'
 import type { AnyObject, PaginationParameter } from '@/types'
 import { dataClone, resetObjToPrimitiveType } from '@/utils/tool'
 
-interface PageOptions<T> {
+interface PageOptions {
   searchForm?: AnyObject
   getListApi: (params: any) => Promise<AnyObject>
   removeRowApi?: (params: any) => Promise<AnyObject>
   customQueryParameters?: () => Record<string, any>
-  getListFunc?: (opts: PageOptions<T>) => void
   resetFunc?: () => void
   sizeChangeFunc?: () => void
   currentChangeFunc?: () => void
 }
 
 // 列表
-export function usePageList<T>(opts: PageOptions<T>) {
+export function usePageList(opts: PageOptions) {
   const {
     searchForm = {},
     getListApi,
     removeRowApi,
     customQueryParameters = () => ({}),
-    getListFunc = () => {},
-    resetFunc = () => {},
-    sizeChangeFunc = () => {},
-    currentChangeFunc = () => {},
+    resetFunc,
+    sizeChangeFunc,
+    currentChangeFunc,
   } = opts
 
   const page = reactive<PaginationParameter>({
@@ -36,9 +34,9 @@ export function usePageList<T>(opts: PageOptions<T>) {
   // 获取列表loading
   const listLoading = ref(false)
 
-  const tableData: Ref<any[]> = ref([])
+  const tableData = ref<any[]>([])
 
-  const getList = (): void => {
+  function getList() {
     listLoading.value = true
 
     const params = {
@@ -53,8 +51,6 @@ export function usePageList<T>(opts: PageOptions<T>) {
           const data = res.data || {}
           tableData.value = data?.list || []
           page.total = data?.total || 0
-
-          getListFunc(opts)
         }
       })
       .catch(() => {
@@ -67,30 +63,26 @@ export function usePageList<T>(opts: PageOptions<T>) {
       })
   }
 
-  const handleSizeChange = (size: number): void => {
-    page.pageSize = size
-    sizeChangeFunc()
+  function handleSizeChange(pageSize: number) {
+    page.pageSize = pageSize
+    sizeChangeFunc?.()
     getList()
   }
 
-  const handleCurrentChange = (cur: number): void => {
-    page.pageNo = cur
-    currentChangeFunc()
+  function handleCurrentChange(pageNo: number) {
+    page.pageNo = pageNo
+    currentChangeFunc?.()
     getList()
   }
 
-  const reset = (): void => {
+  function reset() {
     Object.assign(searchForm, resetObjToPrimitiveType(searchForm))
-    resetFunc()
+    resetFunc?.()
     handleCurrentChange(1)
   }
 
   // 删除
-  const removeRow = (
-    params: any,
-    infoText?: string,
-    delSuccessInfo?: string,
-  ): void => {
+  function removeRow(params: any, infoText?: string, delSuccessInfo?: string) {
     if (!removeRowApi) {
       ElMessage.warning('请配置 removeRowApi 调用')
       return
@@ -112,7 +104,6 @@ export function usePageList<T>(opts: PageOptions<T>) {
           handleCurrentChange(1)
         }
       })
-      .finally(() => {})
   }
 
   return {
@@ -128,6 +119,12 @@ export function usePageList<T>(opts: PageOptions<T>) {
 
 // 弹窗类型
 export type DialogType = 'add' | 'edit' | 'view'
+
+const DialogTypeObj = {
+  add: '新增',
+  edit: '编辑',
+  view: '查看',
+}
 
 interface PageListDialogOpts {
   saveForm: AnyObject // 保存的数据
@@ -150,26 +147,15 @@ export function usePageListDialog(opts: PageListDialogOpts) {
   } = opts
 
   const dialogType = ref<DialogType>('add')
-  const dialogTitle = computed(() => {
-    const typeObj = {
-      add: '新增',
-      edit: '编辑',
-      view: '查看',
-    }
-    return typeObj[dialogType.value]
-  })
 
-  const dialogIsView = computed(() => {
-    return dialogType.value === 'view'
-  })
+  const dialogTitle = computed(() => DialogTypeObj[dialogType.value])
+
+  const dialogIsView = computed(() => dialogType.value === 'view')
 
   const dialogVisible = ref(false)
   const dialogFormRef = ref<FormInstance>()
 
-  const openDialog = async (
-    type: DialogType = 'add',
-    data?: AnyObject,
-  ): Promise<void> => {
+  async function openDialog(type: DialogType = 'add', data?: AnyObject) {
     if (type !== 'add' && !data) {
       console.error('openDialog 函数type类型不等于 add 时 data 必传')
       return
@@ -191,7 +177,7 @@ export function usePageListDialog(opts: PageListDialogOpts) {
     openDialogFunc?.(dataClone(data ?? {}))
   }
 
-  const save = (): void => {
+  function save() {
     dialogFormRef.value?.validate(async (valid): Promise<void> => {
       if (valid) {
         // beforeSaveFunc 存在且返回 false 不继续进行
