@@ -27,22 +27,6 @@ export function resetObjToPrimitiveType(data: PrimitiveData | null): PrimitiveDa
   return newData
 }
 
-/**
- * 根据指定枚举编码转换枚举值
- * @param key 枚举key
- * @param list 枚举list
- * @param id key的字段
- * @param value 值的字段
- */
-export function getCodeNameByCodeId(key: string, list: Array<Record<string, any>>, id = 'code', value = 'name'): string {
-  if (!list)
-    return ''
-
-  const dataItem = list.find(item => item[id] === key)
-
-  return dataItem?.[value] ?? ''
-}
-
 // 根据文件名称获取文件类型
 export function getFileTypeByFileName(fileName: string): string {
   return fileName.substring(fileName.lastIndexOf('.') + 1)

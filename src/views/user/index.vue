@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { getUserList, removeUser } from '@/api/user.ts'
-import { getCodeNameByCodeId } from '@/utils/tool.ts'
 
 const AddAndViewDialog = defineAsyncComponent(
   () => import('./components/AddAndViewDialog.vue'),
@@ -19,7 +18,7 @@ const { reset, page, tableData, handleCurrentChange, removeRow } = usePageList({
 })
 reset()
 
-const { roleEnums, accountTypeEnums } = useEnums()
+const { roleEnums, accountTypeEnums, getEnumName } = useEnums()
 
 const addAndViewDialogRef = ref()
 function openAddAndViewDialog(type: string, row?: any) {
@@ -72,15 +71,15 @@ function openAddAndViewDialog(type: string, row?: any) {
         </template>
       </el-table-column>
       <el-table-column label="账号类型" prop="accountType" min-width="100">
-        <template #default="scope">
-          {{ getCodeNameByCodeId(scope.row.accountType, accountTypeEnums) }}
+        <template #default="{ row }">
+          {{ getEnumName({ key: row.accountType, list: accountTypeEnums }) }}
         </template>
       </el-table-column>
       <el-table-column label="邮箱" prop="email" min-width="180" />
       <el-table-column label="昵称" prop="nickName" min-width="180" />
       <el-table-column label="角色" prop="role" min-width="100">
-        <template #default="scope">
-          {{ getCodeNameByCodeId(scope.row.role, roleEnums) }}
+        <template #default="{ row }">
+          {{ getEnumName({ key: row.role, list: roleEnums }) }}
         </template>
       </el-table-column>
       <el-table-column label="创建时间" prop="createdAt" width="180" />
