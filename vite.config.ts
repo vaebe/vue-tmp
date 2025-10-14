@@ -1,4 +1,5 @@
 import { resolve } from 'node:path'
+import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import gzipPlugin from 'rollup-plugin-gzip'
 import { visualizer } from 'rollup-plugin-visualizer'
@@ -40,6 +41,7 @@ export default defineConfig(({ mode }) => {
         resolvers: [ElementPlusResolver()],
       }),
       visualizer(),
+      tailwindcss(),
       gzipPlugin({ minSize: 1024 }),
     ],
     resolve: {
