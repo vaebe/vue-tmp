@@ -65,10 +65,9 @@ service.interceptors.response.use(
 
     if (res.code !== 0) {
       // 服务端返回错误提示就展示 否则展示
-      const errorText
-        = typeof res.msg === 'string'
-          ? res.msg
-          : Object.values(res.msg).join('\r\n')
+      const errorText = typeof res.msg === 'string'
+        ? res.msg
+        : Object.values(res.msg).join('\r\n')
 
       ElMessage.error(errorText || '非常抱歉，遇到了一些错误！')
       return Promise.reject(errorText || 'error')

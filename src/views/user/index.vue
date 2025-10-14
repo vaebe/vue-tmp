@@ -1,9 +1,7 @@
 <script lang="ts" setup>
 import { getUserList, removeUser } from '@/api/user.ts'
 
-const AddAndViewDialog = defineAsyncComponent(
-  () => import('./components/AddAndViewDialog.vue'),
-)
+const AddAndViewDialog = defineAsyncComponent(() => import('./components/AddAndViewDialog.vue'))
 
 const searchForm = reactive({
   nickName: '',
@@ -28,7 +26,7 @@ function openAddAndViewDialog(type: string, row?: any) {
 
 <template>
   <el-card class="mb-2" :body-style="{ paddingBottom: '2px' }">
-    <el-form :model="searchForm" label-width="90px">
+    <el-form :model="searchForm">
       <el-row :gutter="10">
         <el-col :span="8">
           <el-form-item label="邮箱：">

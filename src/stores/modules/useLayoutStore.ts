@@ -3,7 +3,7 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 const useLayoutStore = defineStore(
   'useLayoutStore',
   () => {
-    const menuDropWidth = ref('64px')
+    const menuDropWidth = ref('44px')
 
     // 是否折叠菜单
     const menuCollapse = ref(false)
@@ -11,17 +11,23 @@ const useLayoutStore = defineStore(
     const setMenuCollapse = (type: boolean) => {
       menuCollapse.value = type
 
-      document.documentElement.style.setProperty('--layout-menu-width', type ? menuDropWidth.value : '240px')
+      document.documentElement.style.setProperty('--layout-menu-width', type ? menuDropWidth.value : '160px')
     }
 
     // 监听容器大小设置菜单是否收起
     useResizeObserver(document.body, (entries) => {
       const entry = entries[0]
+      if (!entry) {
+        return
+      }
+
       const { width } = entry.contentRect
-      if (width < 1280)
+      if (width < 1280) {
         setMenuCollapse(true)
-      else
+      }
+      else {
         setMenuCollapse(false)
+      }
     })
 
     return {

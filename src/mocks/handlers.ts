@@ -2,7 +2,6 @@ import type { LoginParams } from '@/api/login'
 import type { UserInfo } from '@/api/user'
 import dayjs from 'dayjs'
 import { http } from 'msw'
-import { v4 as uuidv4 } from 'uuid'
 import { Decrypt } from '@/utils/password'
 import { userList } from './data'
 import { getApiUrl, sendJson } from './utils'
@@ -37,7 +36,7 @@ export const handlers = [
     }
     else {
       const newUser: UserInfo = {
-        id: uuidv4(),
+        id: crypto.randomUUID(),
         email,
         password,
         nickName: 'kkf2Pg',
@@ -62,7 +61,7 @@ export const handlers = [
     if (newUserInfo.email) {
       const info = {
         ...newUserInfo,
-        id: uuidv4(),
+        id: crypto.randomUUID(),
         accountType: '01',
         updatedAt: dayjs().format('YYYY-MM-DD HH:mm:ss'),
         createdAt: dayjs().format('YYYY-MM-DD HH:mm:ss'),
