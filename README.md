@@ -10,6 +10,6 @@
 
 执行 `pnpm run build` 打包部署
 
-# todo
+## todo
 
-如使用 `webstorm` 出现 eslint 错误请更新至最新版本
+node 版本需要 20.19+ or 22.12+
