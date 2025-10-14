@@ -104,9 +104,9 @@ export const handlers = [
   http.delete(getApiUrl('api/user/:id'), ({ params }) => {
     const { id } = params
 
-    userList = userList.filter(user => user.id !== id)
-
     const user = userList.find(user => user.id === id)
+
+    userList = userList.filter(user => user.id !== id)
 
     if (user) {
       return sendJson(0, null, `用户 ${user.nickName} 删除成功！`)
