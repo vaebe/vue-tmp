@@ -4,6 +4,10 @@
 @import 'nprogress/nprogress.css';
 @import 'tailwindcss';
 
+@theme {
+  --darkMode: class;
+}
+
 input:-internal-autofill-previewed,
 input:-internal-autofill-selected {
   -webkit-text-fill-color: #fff !important;

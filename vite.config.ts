@@ -1,3 +1,4 @@
+import type { UserConfig } from 'vite'
 import { resolve } from 'node:path'
 import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
@@ -10,7 +11,7 @@ import { defineConfig } from 'vite'
 import { version } from './package.json'
 
 export default defineConfig(({ mode }) => {
-  return {
+  const config: UserConfig = {
     base: mode === 'development' ? '/' : '/vue-tmp/',
     plugins: [
       vue(),
@@ -64,4 +65,6 @@ export default defineConfig(({ mode }) => {
       __APP_VERSION__: JSON.stringify(version),
     },
   }
+
+  return config
 })
