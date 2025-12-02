@@ -52,11 +52,9 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks: {
-            'vue-core': ['vue', 'vue-router'],
-            '@vueuse/core': ['@vueuse/core'],
-            'axios': ['axios'],
-            'msw': ['msw'],
-            'crypto-js': ['crypto-js'],
+            'vue-core': ['vue', 'vue-router', '@vueuse/core', 'pinia'],
+            'utils-core': ['dayjs', 'axios'],
+            'utils-extra': ['qs', 'nprogress'],
           },
         },
       },
