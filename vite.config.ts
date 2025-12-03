@@ -51,11 +51,22 @@ export default defineConfig(({ mode }) => {
     build: {
       rollupOptions: {
         output: {
-          manualChunks: {
-            'vue-core': ['vue', 'vue-router', '@vueuse/core', 'pinia'],
-            'utils-core': ['dayjs', 'axios'],
-            'utils-extra': ['qs', 'nprogress'],
-          },
+          advancedChunks: {
+            groups: [
+              {
+                name: 'vue-core',
+                test: /node_modules\/(vue|vue-router|@vueuse\/core|pinia)/,
+              },
+              {
+                name: 'utils-core',
+                test: /node_modules\/(dayjs|axios)/,
+              },
+              {
+                name: 'utils-extra',
+                test: /node_modules\/(qs|nprogress)/,
+              },
+            ],
+          }
         },
       },
     },
